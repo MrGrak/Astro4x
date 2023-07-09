@@ -1,0 +1,16 @@
+
+
+
+Astro 4x TODO:
+
+
+
+
+design universe screen at 640x360 -> wip
+
+add screenmanager and universe screen 
+setup resolution to be 640x360
+
+add sm and lrg pixel fonts, as textures
+use string mappings from lazr
+
