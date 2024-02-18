@@ -6,13 +6,24 @@ namespace Astro4x
 {
     public class Game1 : Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
-
         public Game1()
         {
-            graphics = new GraphicsDeviceManager(this);
+            //set data game refs
+            ScreenManager.GDM = new GraphicsDeviceManager(this);
+            ScreenManager.GDM.GraphicsProfile = GraphicsProfile.HiDef;
+            ScreenManager.CM = Content;
+            ScreenManager.GAME = this;
             Content.RootDirectory = "Content";
+            IsMouseVisible = true;
+            Window.IsBorderless = false;
+            IsFixedTimeStep = true;
+            ScreenManager.GDM.SynchronizeWithVerticalRetrace = true;
+
+            //seto to 1280x720, for now
+            ScreenManager.GDM.PreferredBackBufferWidth = 
+                ScreenManager.WINDOW_WIDTH;
+            ScreenManager.GDM.PreferredBackBufferHeight =
+                ScreenManager.WINDOW_HEIGHT;
         }
 
         protected override void Initialize()
@@ -21,20 +32,30 @@ namespace Astro4x
         }
         protected override void LoadContent()
         {
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            //setup sprite batch, camera rt
+            ScreenManager.SB = new SpriteBatch(GraphicsDevice);
+            ScreenManager.RT2D = new RenderTarget2D(
+                GraphicsDevice,
+                ScreenManager.GAME_WIDTH,
+                ScreenManager.GAME_HEIGHT);
+            
+            //assets then systems, then boot
+            Assets.Constructor();
+            System_Land.Constructor();
+            
+            ScreenManager.Constructor(); //sets boot screen
         }
         
         protected override void UnloadContent() { }
         
         protected override void Update(GameTime gameTime)
         {
-            base.Update(gameTime);
+            ScreenManager.Update();
         }
         
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-            base.Draw(gameTime);
+            ScreenManager.Draw();
         }
     }
 }

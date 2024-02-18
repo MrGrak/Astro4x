@@ -4,13 +4,30 @@
 Astro 4x TODO:
 
 
+setup astro repo and sync into github
+start pushing commits
 
 
-design universe screen at 640x360 -> wip
+complete the zoom in state of land screen
+this focuses on a single tile
 
-add screenmanager and universe screen 
-setup resolution to be 640x360
 
-add sm and lrg pixel fonts, as textures
-use string mappings from lazr
+
+
+create a world view, using rotating 2d
+
+create a universe view, isometric
+
+create transition between those views
+
+
+
+
+
+
+barbarian huts
+small civs that dont progress past 1st age, harder than barbs
+roaming bandits (so we have threats late game too)
+
+each race should have it's own bonuses
 
