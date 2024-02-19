@@ -55,10 +55,11 @@ namespace Astro4x
 
         public static void SetBounds()
         {
-            levelMin.X = 220;
-            levelMin.Y = 100; 
-            levelMax.X = System_Land.tileWidth * 32 - 200;
-            levelMax.Y = 520; 
+            levelMin.X = 280;
+            levelMin.Y = 150; 
+
+            levelMax.X = 930;
+            levelMax.Y = 510; 
         }
         
         public static void SetView()
@@ -138,14 +139,14 @@ namespace Astro4x
             if(targetZoom <= 1.0f)
             {
                 if (currentPosition.X < levelMin.X)
-                { currentPosition.X += 10; targetPosition.X = currentPosition.X; }
+                { currentPosition.X += 2; targetPosition.X = currentPosition.X; }
                 else if (currentPosition.X > levelMax.X)
-                { currentPosition.X -= 10; targetPosition.X = currentPosition.X; }
+                { currentPosition.X -= 2; targetPosition.X = currentPosition.X; }
 
                 if (currentPosition.Y < levelMin.Y)
-                { currentPosition.Y = levelMin.Y; targetPosition.Y = levelMin.Y; }
+                { currentPosition.Y += 2; targetPosition.Y = currentPosition.Y; }
                 else if (currentPosition.Y > levelMax.Y)
-                { currentPosition.Y = levelMax.Y; targetPosition.Y = levelMax.Y; }
+                { currentPosition.Y -= 2; targetPosition.Y = currentPosition.Y; }
             }
             
 
@@ -162,7 +163,7 @@ namespace Astro4x
             SetView();
 
 
-            ScreenManager.Text_Debug.text += "\nCAM:" + currentPosition.X + ", " + currentPosition.Y;
+            //ScreenManager.Text_Debug.text += "\nCAM:" + currentPosition.X + ", " + currentPosition.Y;
         }
 
 

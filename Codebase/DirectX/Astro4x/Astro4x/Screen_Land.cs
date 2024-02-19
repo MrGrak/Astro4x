@@ -41,11 +41,9 @@ namespace Astro4x
             selectedTile = highliteTile;
             //highlight tile needs to be lighter
             highliteTile.alpha = 0.5f;
-
+            //hide off screen for now
             highliteTile.X = -100; highliteTile.Y = -100;
             selectedTile.X = -100; selectedTile.Y = -100;
-
-
         }
 
         public override void Open()
@@ -59,8 +57,8 @@ namespace Astro4x
             System_Land.GenMap();
 
             //place camera
-            Camera2D.targetPosition = new Vector2(128, 128);
-            Camera2D.currentPosition = new Vector2(128, 128);
+            Camera2D.targetPosition = new Vector2(256, 150);
+            Camera2D.currentPosition = new Vector2(256, 150);
             Camera2D.SetBounds();
             Camera2D.tracksLoosely = false;
 
@@ -140,25 +138,32 @@ namespace Astro4x
 
                     #region Move camera with cursor
 
-                    int bounds = 80;
-                    int speed = 3;
+                    int boundsX = 80;
+                    int boundsY = 60;
+                    float speedX = 4.0f;
+                    float speedY = 2.5f;
 
-                    if (Input.cursorPos_Screen.Y < bounds)
+                    if (Input.cursorPos_Screen.X < boundsX)
                     {
-                        Camera2D.targetPosition.Y -= speed;
+                        if (Camera2D.targetPosition.X > 290)
+                        { Camera2D.targetPosition.X -= speedX; }
                     }
-                    else if (Input.cursorPos_Screen.Y > 360 - bounds)
+                    else if (Input.cursorPos_Screen.X > 640 - boundsX)
                     {
-                        Camera2D.targetPosition.Y += speed;
+                        if (Camera2D.targetPosition.X < 920)
+                        { Camera2D.targetPosition.X += speedX; }
                     }
 
-                    if (Input.cursorPos_Screen.X < bounds)
+                    if (Input.cursorPos_Screen.Y < boundsY)
                     {
-                        Camera2D.targetPosition.X -= speed;
+                        if (Camera2D.targetPosition.Y > 160)
+                        { Camera2D.targetPosition.Y -= speedY; }
+                        
                     }
-                    else if (Input.cursorPos_Screen.X > 640 - bounds)
+                    else if (Input.cursorPos_Screen.Y > 360 - boundsY)
                     {
-                        Camera2D.targetPosition.X += speed;
+                        if (Camera2D.targetPosition.Y < 500)
+                        { Camera2D.targetPosition.Y += speedY; }
                     }
 
                     #endregion

@@ -124,17 +124,35 @@ namespace Astro4x
                 {
                     if (i < tileWidth * 4)
                     {
-                        tiles[i].ID = TileID.Snow; tiles[i].Height = 
-                            (byte)(ScreenManager.RAND.Next(0, 6) * 2);
+                        tiles[i].ID = TileID.Snow;
+                        
+                        if (i < tileWidth * 1 + 1)
+                        { tiles[i].Height = (byte)(ScreenManager.RAND.Next(4, 6) * 2); }
+
+                        else if (i < tileWidth * 2 + 2)
+                        { tiles[i].Height = (byte)(ScreenManager.RAND.Next(2, 4) * 2); }
+
+                        else if (i < tileWidth * 3 + 3)
+                        { tiles[i].Height = (byte)(ScreenManager.RAND.Next(0, 2) * 2); }
                     }
                     else { tiles[i].ID = TileID.Water_Shallow; }
                 }
-                else if(i > totalTiles - (tileWidth * 6) - 2) //botom
+                else if(i > totalTiles - (tileWidth * 6) - 2) //bottom
                 {
                     if (i > totalTiles - (tileWidth * 4))
                     {
-                        tiles[i].ID = TileID.Snow; tiles[i].Height = 
-                            (byte)(ScreenManager.RAND.Next(0, 6) * 2);
+                        tiles[i].ID = TileID.Snow;
+
+                        if (i > totalTiles - (tileWidth * 1) - 1)
+                        { tiles[i].Height = (byte)(ScreenManager.RAND.Next(4, 6) * 2); }
+
+                        if (i > totalTiles - (tileWidth * 2) - 2)
+                        { tiles[i].Height = (byte)(ScreenManager.RAND.Next(2, 4) * 2); }
+
+                        if (i > totalTiles - (tileWidth * 3) - 3)
+                        { tiles[i].Height = (byte)(ScreenManager.RAND.Next(0, 2) * 2); }
+
+
                     }
                     else { tiles[i].ID = TileID.Water_Shallow; }
                 }

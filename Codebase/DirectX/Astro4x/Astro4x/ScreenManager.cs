@@ -123,16 +123,18 @@ namespace Astro4x
 
             //for some reason ms isn't working?
             //Text_Debug.text = timer.ElapsedMilliseconds.ToString("00.00000");
-            Text_Debug.text += "\n" + timer.ElapsedTicks.ToString();
+            Text_Debug.text += timer.ElapsedTicks.ToString();
             Text_Debug.text += "\n" + activeScreen.Name;
             Text_Debug.text += " : " + activeScreen.displayState;
             Text_Debug.text += "\nTILES: " + System_Land.totalTiles;
-
             //Text_Debug.text += "\nSCROLL WHL: " + Input.scrollWheelValue;
-
-            Draw(Text_Debug);
+            
+            //draw debg info only at 1.0 zoom
+            if(Camera2D.targetZoom == 1.0f) { Draw(Text_Debug); }
+            
             //clear, so screens can draw to it as needed
-            Text_Debug.text = ""; 
+            Text_Debug.text = "";
+
 
             SB.End();
             

@@ -6,13 +6,18 @@ Astro 4x TODO:
 
 
 
-make highlight tile half alpha. done.
-
-when cursor gets to edge of screen, move camera. this should
-not be done by keyboard anymore.
 
 
 
+
+improved zooming in/out. improved cursor movement bounds.
+
+swapped ice caps to have higher elevations.
+
+
+fix the flood fill algorithm, it doesn't work for all tiles.
+we also need to implement bounds so we dont grab tiles across
+the other side of map.
 
 
 
