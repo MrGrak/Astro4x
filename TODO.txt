@@ -5,29 +5,12 @@ Astro 4x TODO:
 
 
 
-we want to highlight the current tile under cursor with a
-special sprite highlight, which we can draw in any color,
-so make it white in the sheet. draw it sorted over the tile
-currently under the cursor. we no longer alter the height,
-because we need to control that in generation.
 
-
-make highlight tile half alpha
-
-
-fixed a bug with zooming out, bounds now corrects camera
-over many frames, instead of instantly.
+make highlight tile half alpha. done.
 
 when cursor gets to edge of screen, move camera. this should
 not be done by keyboard anymore.
 
-
-
-
-add selected tile sprite
-
-when we right click a tile, set it as selected, zoom camera
-into it, as focus.
 
 
 

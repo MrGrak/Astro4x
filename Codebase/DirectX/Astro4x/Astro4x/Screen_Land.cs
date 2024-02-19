@@ -39,13 +39,12 @@ namespace Astro4x
 
             //copy same properties to selected tile sprite
             selectedTile = highliteTile;
+            //highlight tile needs to be lighter
+            highliteTile.alpha = 0.5f;
 
-            //place for testing
-            highliteTile.X = 128;
-            highliteTile.Y = 128;
+            highliteTile.X = -100; highliteTile.Y = -100;
+            selectedTile.X = -100; selectedTile.Y = -100;
 
-            selectedTile.X = 256;
-            selectedTile.Y = 256;
 
         }
 
@@ -118,6 +117,7 @@ namespace Astro4x
 
                     #region Move Camera with keyboard input
 
+                    /*
                     if (Input.IsKeyDown(Keys.D))
                     {
                         Camera2D.targetPosition.X += 10;
@@ -126,8 +126,6 @@ namespace Astro4x
                     {
                         Camera2D.targetPosition.X -= 10;
                     }
-
-
                     if (Input.IsKeyDown(Keys.W))
                     {
                         Camera2D.targetPosition.Y -= 10;
@@ -135,6 +133,32 @@ namespace Astro4x
                     else if (Input.IsKeyDown(Keys.S))
                     {
                         Camera2D.targetPosition.Y += 10;
+                    }
+                    */
+
+                    #endregion
+
+                    #region Move camera with cursor
+
+                    int bounds = 80;
+                    int speed = 3;
+
+                    if (Input.cursorPos_Screen.Y < bounds)
+                    {
+                        Camera2D.targetPosition.Y -= speed;
+                    }
+                    else if (Input.cursorPos_Screen.Y > 360 - bounds)
+                    {
+                        Camera2D.targetPosition.Y += speed;
+                    }
+
+                    if (Input.cursorPos_Screen.X < bounds)
+                    {
+                        Camera2D.targetPosition.X -= speed;
+                    }
+                    else if (Input.cursorPos_Screen.X > 640 - bounds)
+                    {
+                        Camera2D.targetPosition.X += speed;
                     }
 
                     #endregion
@@ -218,12 +242,7 @@ namespace Astro4x
                     }
 
                     #endregion
-
-                    //right click to zoom in
-
-                    //left click to set selected
-
-
+                    
 
                 }
                 else if (Camera2D.targetZoom > 1.0f)
