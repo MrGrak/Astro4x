@@ -77,6 +77,16 @@ namespace Astro4x
             if(displayState == DisplayState.OPENED)
             {
 
+                //generate a new world map via space
+
+                if(Input.IsNewKeyPress(Keys.Space))
+                {
+                    System_Land.GenMap();
+                }
+
+
+
+
                 #region Zoom in/out
 
                 if (Input.IsScrollWheelMoving())
@@ -115,7 +125,7 @@ namespace Astro4x
 
                     #region Move Camera with keyboard input
 
-                    /*
+                    
                     if (Input.IsKeyDown(Keys.D))
                     {
                         Camera2D.targetPosition.X += 10;
@@ -132,14 +142,14 @@ namespace Astro4x
                     {
                         Camera2D.targetPosition.Y += 10;
                     }
-                    */
+                    
 
                     #endregion
 
                     #region Move camera with cursor
 
-                    int boundsX = 80;
-                    int boundsY = 60;
+                    int boundsX = 20;
+                    int boundsY = 20;
                     float speedX = 4.0f;
                     float speedY = 2.5f;
 
@@ -210,13 +220,17 @@ namespace Astro4x
                                 //notify debug screen
                                 ScreenManager.Text_Debug.text += "TILE ID: " + i;
                                 ScreenManager.Text_Debug.text += "\nROW: " + yCounter;
-                                
+                                ScreenManager.Text_Debug.text += "\n";
+
                                 //check for LMB
-                                if(Input.IsNewLeftClick())
+                                if (Input.IsNewLeftClick())
                                 {
                                     selectedTileID = i;
                                     selectedTile.X = tilePos.X - 16;
                                     selectedTile.Y = tilePos.Y - 16 - System_Land.tiles[i].Height;
+
+                                    Camera2D.targetPosition.X = selectedTile.X + 16;
+                                    Camera2D.targetPosition.Y = selectedTile.Y + 16;
                                 }
 
                                 //check for RMB
@@ -226,10 +240,14 @@ namespace Astro4x
                                     selectedTileID = i;
                                     selectedTile.X = tilePos.X - 16;
                                     selectedTile.Y = tilePos.Y - 16 - System_Land.tiles[i].Height;
+
                                     //zoom to selected
-                                    Camera2D.targetZoom = 2.0f;
-                                    Camera2D.targetPosition.X = selectedTile.X + 16;
-                                    Camera2D.targetPosition.Y = selectedTile.Y + 16;
+                                    //Camera2D.targetZoom = 2.0f;
+                                    //Camera2D.targetPosition.X = selectedTile.X + 16;
+                                    //Camera2D.targetPosition.Y = selectedTile.Y + 16;
+
+                                    //fill selected
+                                    System_Land.Fill3x3(i, TileID.Grass);
                                 }
                             }
                             else

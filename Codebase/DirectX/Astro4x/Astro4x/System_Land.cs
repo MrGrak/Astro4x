@@ -16,7 +16,7 @@ namespace Astro4x
     {
         public static int tileWidth = 37;
 
-        public static int totalTiles = tileWidth * 85 + 8;
+        public static int totalTiles = tileWidth * 85 + 9;
         public static Tile[] tiles = new Tile[totalTiles];
         public static SpriteStruct sprite;
         
@@ -114,7 +114,9 @@ namespace Astro4x
 
         public static void GenMap()
         {
-            //create a water world with polar ice caps
+
+            #region Create a water world with polar ice caps
+
             for (int i = 0; i < totalTiles; i++)
             {
                 tiles[i].ID = TileID.Water_Deep;
@@ -158,56 +160,79 @@ namespace Astro4x
                 }
             }
 
+            #endregion
+
 
             //create a land mass and grow it
             int seed = ScreenManager.RAND.Next(tileWidth * 8, totalTiles - (tileWidth * 8));
 
-
+            /*
             //test all neighbors
+            Fill3x3(533, TileID.Grass); //572 610 649 687
+            Fill3x3(687, TileID.Grass);
+            Fill3x3(841, TileID.Grass);
+            Fill3x3(995, TileID.Grass);
+            */
 
-            FloodFill(1035, 2, TileID.Grass);
+            //Fill3x3(533, TileID.Grass);
+            //+154
 
-            //FloodFill(2083, 2, TileID.Dirt);
-        }
-
-        public static void FloodFill(int arrayIndex, int levels, TileID Type)
-        {
-            tiles[arrayIndex].ID = Type;
-
-            //level 1
-            if(levels >= 1)
+            //this is a bit weird
+            asdf;
             {
-                for (int i = 1; i < 9; i++)
-                { tiles[GetNeighbor(arrayIndex, (Direction)i)].ID = Type; }
-            }
-
-            //level 2
-            if (levels >= 2)
-            {
-                for (int g = 1; g < 9; g++)
+                int counter = 533;
+                for (int i = 0; i < 15; i++)
                 {
-                    int neighbor = GetNeighbor(arrayIndex, (Direction)g);
-                    for (int i = 1; i < 9; i++)
-                    { tiles[GetNeighbor(neighbor, (Direction)i)].ID = Type; }
+                    Fill3x3(counter, TileID.Grass);
+                    if (i % 2 == 0) { counter += 39; }
+                    else { counter += 38; }
+                    
                 }
             }
             
-            
 
 
+            /*
+            //build random splotches
+            for(int i = 0; i < 50; i++)
+            {
+                int id = ScreenManager.RAND.Next(400, totalTiles - 400);
+                Fill3x3(id, TileID.Grass);
+            }
+            */
+
+
+        }
+
+        public static void Fill3x3(int arrayIndex, TileID Type)
+        {
+            tiles[arrayIndex].ID = Type;
+
+            for (int i = 1; i < 9; i++)
+            { tiles[GetNeighbor(arrayIndex, (Direction)i)].ID = Type; }
         }
 
         public static int GetNeighbor(int arrayIndex, Direction D)
         {
             int returnValue = arrayIndex;
+            
+            //this depends on row even or odd
+            int row = arrayIndex / tileWidth;
+            //row += 1;
+            Debug.WriteLine(row);
+            
 
+
+            
             if (D == Direction.Up) //up
             {
                 returnValue = arrayIndex - tileWidth * 2 - 2;
             }
-            else if(D == Direction.UpRight)
+            else if (D == Direction.UpRight)
             {
-                returnValue = arrayIndex - tileWidth * 1 - 0;
+                //returnValue = arrayIndex - tileWidth * 1 - 1;
+                //if (row % 2 != 0 && arrayIndex % 2 != 0) { returnValue++; }
+                //if (row % 2 != 0 && arrayIndex % 2 == 0) { returnValue++; }
             }
             else if (D == Direction.Right)
             {
@@ -215,7 +240,8 @@ namespace Astro4x
             }
             else if (D == Direction.DownRight)
             {
-                returnValue = arrayIndex + tileWidth * 1 + 2;
+                //returnValue = arrayIndex + tileWidth * 1 + 1;
+                //if (row % 2 != 0) { returnValue++; }
             }
             else if (D == Direction.Down)
             {
@@ -223,7 +249,8 @@ namespace Astro4x
             }
             else if (D == Direction.DownLeft)
             {
-                returnValue = arrayIndex + tileWidth * 1 + 1;
+                //returnValue = arrayIndex + tileWidth * 1 - 0;
+                //if (row % 2 != 0) { returnValue++; }
             }
             else if (D == Direction.Left)
             {
@@ -231,9 +258,13 @@ namespace Astro4x
             }
             else if (D == Direction.UpLeft)
             {
-                returnValue = arrayIndex - tileWidth * 1 - 1;
+                //returnValue = arrayIndex - tileWidth * 1 - 2;
+                //if (row % 2 != 0) { returnValue++; }
             }
+            
 
+
+            
             //bound max + min return values
             if (returnValue > totalTiles)
             { returnValue = totalTiles; }
