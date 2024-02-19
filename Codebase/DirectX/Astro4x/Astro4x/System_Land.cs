@@ -34,7 +34,7 @@ namespace Astro4x
             sprite.draw_y = (byte)(0 * sprite.draw_height);
 
             sprite.alpha = 1.0f;
-            sprite.layer = Layers.Dev_sprite;
+            sprite.layer = Layers.Land;
         }
 
         public static void Reset()
@@ -85,7 +85,7 @@ namespace Astro4x
                 tileCounter++;
 
                 //calc sprite layer
-                sprite.layer = Layers.Dev_sprite;
+                sprite.layer = Layers.Land;
                 sprite.layer -= i * 0.000001f; //sort back to front
                 
                 //draw sprite at tile location
@@ -123,13 +123,19 @@ namespace Astro4x
                 if(i < tileWidth * 6 + 2) //top
                 {
                     if (i < tileWidth * 4)
-                    { tiles[i].ID = TileID.Snow; tiles[i].Height = (byte)(ScreenManager.RAND.Next(0, 3) * 2); }
+                    {
+                        tiles[i].ID = TileID.Snow; tiles[i].Height = 
+                            (byte)(ScreenManager.RAND.Next(0, 6) * 2);
+                    }
                     else { tiles[i].ID = TileID.Water_Shallow; }
                 }
                 else if(i > totalTiles - (tileWidth * 6) - 2) //botom
                 {
                     if (i > totalTiles - (tileWidth * 4))
-                    { tiles[i].ID = TileID.Snow; tiles[i].Height = (byte)(ScreenManager.RAND.Next(0, 3) * 2); }
+                    {
+                        tiles[i].ID = TileID.Snow; tiles[i].Height = 
+                            (byte)(ScreenManager.RAND.Next(0, 6) * 2);
+                    }
                     else { tiles[i].ID = TileID.Water_Shallow; }
                 }
             }

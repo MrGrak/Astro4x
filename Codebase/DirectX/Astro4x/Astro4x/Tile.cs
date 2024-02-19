@@ -16,6 +16,5 @@ namespace Astro4x
     {
         public TileID ID;
         public byte Height;
-        public byte Offset;
     }
 }

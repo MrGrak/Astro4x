@@ -4,12 +4,23 @@
 Astro 4x TODO:
 
 
-setup astro repo and sync into github
-start pushing commits
+
+we want to highlight the current tile under cursor with a
+special sprite highlight, which we can draw in any color,
+so make it white in the sheet. draw it sorted over the tile
+currently under the cursor. we no longer alter the height,
+because we need to control that in generation.
 
 
-complete the zoom in state of land screen
-this focuses on a single tile
+
+add highlighted tile sprite
+add selected tile sprite
+
+when we right click a tile, set it as selected, zoom camera
+into it, as focus.
+
+
+
 
 
 
