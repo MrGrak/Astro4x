@@ -15,6 +15,15 @@ because we need to control that in generation.
 make highlight tile half alpha
 
 
+fixed a bug with zooming out, bounds now corrects camera
+over many frames, instead of instantly.
+
+when cursor gets to edge of screen, move camera. this should
+not be done by keyboard anymore.
+
+
+
+
 add selected tile sprite
 
 when we right click a tile, set it as selected, zoom camera

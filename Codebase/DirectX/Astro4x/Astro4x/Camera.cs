@@ -138,9 +138,9 @@ namespace Astro4x
             if(targetZoom <= 1.0f)
             {
                 if (currentPosition.X < levelMin.X)
-                { currentPosition.X = levelMin.X; targetPosition.X = levelMin.X; }
+                { currentPosition.X += 10; targetPosition.X = currentPosition.X; }
                 else if (currentPosition.X > levelMax.X)
-                { currentPosition.X = levelMax.X; targetPosition.X = levelMax.X; }
+                { currentPosition.X -= 10; targetPosition.X = currentPosition.X; }
 
                 if (currentPosition.Y < levelMin.Y)
                 { currentPosition.Y = levelMin.Y; targetPosition.Y = levelMin.Y; }

@@ -191,7 +191,17 @@ namespace Astro4x
                                 }
 
                                 //check for RMB
+                                if (Input.IsNewRightClick())
+                                {
 
+                                    selectedTileID = i;
+                                    selectedTile.X = tilePos.X - 16;
+                                    selectedTile.Y = tilePos.Y - 16 - System_Land.tiles[i].Height;
+                                    //zoom to selected
+                                    Camera2D.targetZoom = 2.0f;
+                                    Camera2D.targetPosition.X = selectedTile.X + 16;
+                                    Camera2D.targetPosition.Y = selectedTile.Y + 16;
+                                }
                             }
                             else
                             {
