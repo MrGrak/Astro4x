@@ -181,6 +181,17 @@ namespace Astro4x
                                 //notify debug screen
                                 ScreenManager.Text_Debug.text += "TILE ID: " + i;
                                 ScreenManager.Text_Debug.text += "\nROW: " + yCounter;
+                                
+                                //check for LMB
+                                if(Input.IsNewLeftClick())
+                                {
+                                    selectedTileID = i;
+                                    selectedTile.X = tilePos.X - 16;
+                                    selectedTile.Y = tilePos.Y - 16 - System_Land.tiles[i].Height;
+                                }
+
+                                //check for RMB
+
                             }
                             else
                             {
@@ -258,8 +269,13 @@ namespace Astro4x
 
             System_Land.Draw();
 
-            ScreenManager.Draw(highliteTile);
-            ScreenManager.Draw(selectedTile);
+            //dont draw selected or highlight zoomed out
+            if (Camera2D.targetZoom >= 1.0f)
+            {
+                ScreenManager.Draw(highliteTile);
+                ScreenManager.Draw(selectedTile);
+            }
+            
 
             ScreenManager.SB.End();
         }

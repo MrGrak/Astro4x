@@ -12,8 +12,9 @@ currently under the cursor. we no longer alter the height,
 because we need to control that in generation.
 
 
+make highlight tile half alpha
 
-add highlighted tile sprite
+
 add selected tile sprite
 
 when we right click a tile, set it as selected, zoom camera
