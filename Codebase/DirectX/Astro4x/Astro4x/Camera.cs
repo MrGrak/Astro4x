@@ -21,7 +21,7 @@ namespace Astro4x
         public static Vector2 distance;
         public static float targetZoom = 1.0f; //always 1.0
         public static float currentZoom = 1.0f;
-        public static float zoomSpeed = 0.05f;
+        public static float zoomSpeed = 0.04f;
         public static Matrix view = Matrix.Identity;
         public static Matrix matRotation = Matrix.CreateRotationZ(0.0f);
         public static Matrix matZoom;
@@ -55,11 +55,11 @@ namespace Astro4x
 
         public static void SetBounds()
         {
-            levelMin.X = 280;
-            levelMin.Y = 150; 
+            levelMin.X = 305;
+            levelMin.Y = 180; 
 
-            levelMax.X = 930;
-            levelMax.Y = 510; 
+            levelMax.X = 960;
+            levelMax.Y = 555; 
         }
         
         public static void SetView()
@@ -134,19 +134,19 @@ namespace Astro4x
             currentPosition.X = (int)currentPosition.X;
             currentPosition.Y = (int)currentPosition.Y;
 
-
+            
             //bound camera pos to inside level, so it presents nicely
-            if(targetZoom <= 1.0f)
+            if(targetZoom == 1.0f)
             {
                 if (currentPosition.X < levelMin.X)
-                { currentPosition.X += 2; targetPosition.X = currentPosition.X; }
+                { currentPosition.X += 5; targetPosition.X = currentPosition.X; }
                 else if (currentPosition.X > levelMax.X)
-                { currentPosition.X -= 2; targetPosition.X = currentPosition.X; }
+                { currentPosition.X -= 5; targetPosition.X = currentPosition.X; }
 
                 if (currentPosition.Y < levelMin.Y)
-                { currentPosition.Y += 2; targetPosition.Y = currentPosition.Y; }
+                { currentPosition.Y += 5; targetPosition.Y = currentPosition.Y; }
                 else if (currentPosition.Y > levelMax.Y)
-                { currentPosition.Y -= 2; targetPosition.Y = currentPosition.Y; }
+                { currentPosition.Y -= 5; targetPosition.Y = currentPosition.Y; }
             }
             
 

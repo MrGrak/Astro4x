@@ -10,19 +10,6 @@ Astro 4x TODO:
 
 
 
-improved zooming in/out. improved cursor movement bounds.
-
-swapped ice caps to have higher elevations.
-
-
-fix the flood fill algorithm, it doesn't work for all tiles.
-we also need to implement bounds so we dont grab tiles across
-the other side of map.
-
-
-
-
-
 create a world view, using rotating 2d
 
 create a universe view, isometric

@@ -12,16 +12,14 @@ namespace Astro4x
 {
     public class Screen_Land : Screen
     {
-
-
         public byte heightOffset = 8;
 
         public SpriteStruct highliteTile;
         public SpriteStruct selectedTile;
         public int selectedTileID;
 
-
-
+        public byte highliteTimer = 0;
+        public byte highliteAnimIndex = 0;
 
 
         public Screen_Land()
@@ -30,17 +28,17 @@ namespace Astro4x
             
             //setup highlight tile sprite
             highliteTile = new SpriteStruct();
-            highliteTile.draw_width = 32;
-            highliteTile.draw_height = 32;
-            highliteTile.draw_x = (byte)(1 * highliteTile.draw_width);
-            highliteTile.draw_y = (byte)(0 * highliteTile.draw_height);
+            highliteTile.draw_width = 16;
+            highliteTile.draw_height = 16;
+            highliteTile.draw_x = (byte)(0 * highliteTile.draw_width);
+            highliteTile.draw_y = (byte)(2 * highliteTile.draw_height);
             highliteTile.alpha = 1.0f;
             highliteTile.layer = Layers.Land_UI;
 
             //copy same properties to selected tile sprite
             selectedTile = highliteTile;
             //highlight tile needs to be lighter
-            highliteTile.alpha = 0.5f;
+            highliteTile.alpha = 0.75f;
             //hide off screen for now
             highliteTile.X = -100; highliteTile.Y = -100;
             selectedTile.X = -100; selectedTile.Y = -100;
@@ -56,9 +54,10 @@ namespace Astro4x
             //load map into land system
             System_Land.GenMap();
 
-            //place camera
-            Camera2D.targetPosition = new Vector2(256, 150);
-            Camera2D.currentPosition = new Vector2(256, 150);
+            //place camera center
+            Camera2D.targetPosition = new Vector2(632, 368);
+            Camera2D.currentPosition = new Vector2(632, 368);
+            
             Camera2D.SetBounds();
             Camera2D.tracksLoosely = false;
 
@@ -78,7 +77,6 @@ namespace Astro4x
             {
 
                 //generate a new world map via space
-
                 if(Input.IsNewKeyPress(Keys.Space))
                 {
                     System_Land.GenMap();
@@ -124,30 +122,36 @@ namespace Astro4x
                 {
 
                     #region Move Camera with keyboard input
-
                     
                     if (Input.IsKeyDown(Keys.D))
                     {
-                        Camera2D.targetPosition.X += 10;
+                        if (Camera2D.targetPosition.X < Camera2D.levelMax.X - 5)
+                        { Camera2D.targetPosition.X += 5; }
                     }
-                    else if (Input.IsKeyDown(Keys.A))
+                    if (Input.IsKeyDown(Keys.A))
                     {
-                        Camera2D.targetPosition.X -= 10;
-                    }
-                    if (Input.IsKeyDown(Keys.W))
-                    {
-                        Camera2D.targetPosition.Y -= 10;
-                    }
-                    else if (Input.IsKeyDown(Keys.S))
-                    {
-                        Camera2D.targetPosition.Y += 10;
+                        if (Camera2D.targetPosition.X > Camera2D.levelMin.X + 5)
+                        { Camera2D.targetPosition.X -= 5; }
                     }
                     
-
+                    if (Input.IsKeyDown(Keys.W))
+                    {
+                        if (Camera2D.targetPosition.Y > Camera2D.levelMin.Y + 5)
+                        { Camera2D.targetPosition.Y -= 5; }
+                    }
+                    if (Input.IsKeyDown(Keys.S))
+                    {
+                        if (Camera2D.targetPosition.Y < Camera2D.levelMax.Y - 5)
+                        { Camera2D.targetPosition.Y += 5; }
+                    }
+                    
                     #endregion
 
                     #region Move camera with cursor
 
+                    //this is shit and i hate it
+
+                    /*
                     int boundsX = 20;
                     int boundsY = 20;
                     float speedX = 4.0f;
@@ -175,6 +179,7 @@ namespace Astro4x
                         if (Camera2D.targetPosition.Y < 500)
                         { Camera2D.targetPosition.Y += speedY; }
                     }
+                    */
 
                     #endregion
 
@@ -182,73 +187,81 @@ namespace Astro4x
 
                     if (Camera2D.targetZoom == 1.0f)
                     {
+                        
+                        
                         int tileCounter = 0;
                         int yCounter = 1;
-                        bool offsetX = true;
 
                         for (int i = 0; i < System_Land.totalTiles; i++)
                         {
                             //wrap array to map
-                            if (tileCounter > System_Land.tileWidth)
+                            if (tileCounter >= System_Land.tilesPerRow)
                             {
                                 tileCounter = 0;
                                 yCounter++;
-
-                                offsetX = true;
-                                if (yCounter % 2 == 0)
-                                { offsetX = false; }
                             }
 
                             //calc tile position for cursor comparison
                             Point tilePos = new Point(0, 0);
 
                             //calc x pos
-                            tilePos.X = System_Land.x + tileCounter * 32;
-                            if (offsetX) { tilePos.X += 16; }
+                            tilePos.X = System_Land.x + tileCounter * 16;
 
                             //calc y pos
-                            tilePos.Y = System_Land.y + (yCounter * 8);
+                            tilePos.Y = System_Land.y + (yCounter * 16);
 
                             //compare cursor and tile pos
-                            if (Math.Abs(Input.cursorPos_World.X - tilePos.X) < 12
-                                && Math.Abs(Input.cursorPos_World.Y - tilePos.Y) < 6)
+                            if (Math.Abs(Input.cursorPos_World.X - tilePos.X) < 8
+                                && Math.Abs(Input.cursorPos_World.Y - tilePos.Y) < 8)
                             {
                                 //place highlight tile over tile
-                                highliteTile.X = tilePos.X - 16;
-                                highliteTile.Y = tilePos.Y - 16 - System_Land.tiles[i].Height;
+                                highliteTile.X = tilePos.X - 8;
+                                highliteTile.Y = tilePos.Y - 8;
 
                                 //notify debug screen
-                                ScreenManager.Text_Debug.text += "TILE ID: " + i;
-                                ScreenManager.Text_Debug.text += "\nROW: " + yCounter;
-                                ScreenManager.Text_Debug.text += "\n";
+                                ScreenManager.Text_Debug_FollowMouse.text = "TILE ID: " + i;
+                                ScreenManager.Text_Debug_FollowMouse.text += "\nROW: " + yCounter;
+                                ScreenManager.Text_Debug_FollowMouse.text += "\n";
 
                                 //check for LMB
                                 if (Input.IsNewLeftClick())
                                 {
                                     selectedTileID = i;
-                                    selectedTile.X = tilePos.X - 16;
-                                    selectedTile.Y = tilePos.Y - 16 - System_Land.tiles[i].Height;
+                                    selectedTile.X = tilePos.X - 8;
+                                    selectedTile.Y = tilePos.Y - 8;
 
-                                    Camera2D.targetPosition.X = selectedTile.X + 16;
-                                    Camera2D.targetPosition.Y = selectedTile.Y + 16;
+                                    Camera2D.targetPosition.X = selectedTile.X + 8;
+                                    Camera2D.targetPosition.Y = selectedTile.Y + 8;
                                 }
 
                                 //check for RMB
                                 if (Input.IsNewRightClick())
                                 {
+                                    //selectedTileID = i;
+                                    //selectedTile.X = tilePos.X - 8;
+                                    //selectedTile.Y = tilePos.Y - 8;
 
-                                    selectedTileID = i;
-                                    selectedTile.X = tilePos.X - 16;
-                                    selectedTile.Y = tilePos.Y - 16 - System_Land.tiles[i].Height;
-
+                                    /*
                                     //zoom to selected
-                                    //Camera2D.targetZoom = 2.0f;
-                                    //Camera2D.targetPosition.X = selectedTile.X + 16;
-                                    //Camera2D.targetPosition.Y = selectedTile.Y + 16;
+                                    Camera2D.targetZoom = 2.0f;
+                                    Camera2D.targetPosition.X = selectedTile.X + 8;
+                                    Camera2D.targetPosition.Y = selectedTile.Y + 8;
+                                    */
 
+                                    //fill selected
+                                    //System_Land.Fill3x3(i, TileID.Grass);
+                                }
+
+                                //"paint" tiles using RMB
+                                if(Input.currentMouseState.RightButton == ButtonState.Pressed)
+                                {
                                     //fill selected
                                     System_Land.Fill3x3(i, TileID.Grass);
                                 }
+
+
+                                //only check one tile, exit loop
+                                i = System_Land.totalTiles;
                             }
                             else
                             {
@@ -261,7 +274,7 @@ namespace Astro4x
                             tileCounter++;
                         }
 
-
+                        
                     }
 
                     #endregion
@@ -275,9 +288,8 @@ namespace Astro4x
                 else
                 {
                     //zoomed out, lock camera to one position
-                    Camera2D.targetPosition.X = 600;
-                    Camera2D.targetPosition.Y = 340;
-                    
+                    Camera2D.targetPosition.X = 632;
+                    Camera2D.targetPosition.Y = 368;
                 }
             }
         }
@@ -309,6 +321,24 @@ namespace Astro4x
 
 
 
+            #region Aanimate highlight tile
+            
+            highliteTimer++;
+            if(highliteTimer > 10)
+            {
+                highliteTimer = 0;
+                //inc animation index, loop at end
+                highliteAnimIndex++;
+                if(highliteAnimIndex > 2)
+                { highliteAnimIndex = 0; }
+                //set x frame (animate)
+                highliteTile.draw_x = (byte)(highliteAnimIndex * highliteTile.draw_width);
+            }
+            
+            #endregion
+
+
+
             Camera2D.Update();
         }
 
@@ -321,13 +351,16 @@ namespace Astro4x
 
             System_Land.Draw();
 
-            //dont draw selected or highlight zoomed out
+            //dont draw selected when zoomed out
             if (Camera2D.targetZoom >= 1.0f)
             {
-                ScreenManager.Draw(highliteTile);
                 ScreenManager.Draw(selectedTile);
             }
-            
+            //draw highlight tile only at interactive pov
+            if(Camera2D.targetZoom == 1.0f)
+            {
+                ScreenManager.Draw(highliteTile);
+            }
 
             ScreenManager.SB.End();
         }

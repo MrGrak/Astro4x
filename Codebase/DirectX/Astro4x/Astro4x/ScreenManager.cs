@@ -46,7 +46,8 @@ namespace Astro4x
         public static List<Screen> screens = new List<Screen>();
         public static Screen activeScreen;
         
-        public static Text Text_Debug;
+        public static Text Text_Debug_LeftTop;
+        public static Text Text_Debug_FollowMouse;
         public static Stopwatch timer = new Stopwatch();
         public static long ticks = 0;
 
@@ -57,8 +58,11 @@ namespace Astro4x
 
         public static void Constructor()
         {
-            Text_Debug = new Text("init", new Vector2(8, 5), Color.White);
-            Text_Debug.layer = Layers.Debug_Text;
+            Text_Debug_LeftTop = new Text("init", new Vector2(8, 5), Color.White);
+            Text_Debug_LeftTop.layer = Layers.Debug_Text;
+
+            Text_Debug_FollowMouse = new Text("init", new Vector2(8, GAME_HEIGHT / 2), Color.White);
+            Text_Debug_FollowMouse.layer = Layers.Debug_Text;
 
             //construct all screen instances
             Land = new Screen_Land();
@@ -123,18 +127,24 @@ namespace Astro4x
 
             //for some reason ms isn't working?
             //Text_Debug.text = timer.ElapsedMilliseconds.ToString("00.00000");
-            Text_Debug.text += timer.ElapsedTicks.ToString();
-            Text_Debug.text += "\n" + activeScreen.Name;
-            Text_Debug.text += " : " + activeScreen.displayState;
-            Text_Debug.text += "\nTILES: " + System_Land.totalTiles;
+            Text_Debug_LeftTop.text = (timer.ElapsedTicks * 0.0001f).ToString("0.0000") + " MS";
+            Text_Debug_LeftTop.text += "\n" + activeScreen.Name;
+            Text_Debug_LeftTop.text += " : " + activeScreen.displayState;
+            Text_Debug_LeftTop.text += "\nTILES: " + System_Land.totalTiles;
             //Text_Debug.text += "\nSCROLL WHL: " + Input.scrollWheelValue;
             
-            //draw debg info only at 1.0 zoom
-            if(Camera2D.targetZoom == 1.0f) { Draw(Text_Debug); }
             
-            //clear, so screens can draw to it as needed
-            Text_Debug.text = "";
+            //follow mouse around
+            Text_Debug_FollowMouse.position.X = Input.cursorPos_Screen.X + 8;
+            Text_Debug_FollowMouse.position.Y = Input.cursorPos_Screen.Y;
 
+            //draw debg info only at 1.0 zoom
+            if (Camera2D.targetZoom == 1.0f)
+            {
+                Draw(Text_Debug_LeftTop);
+                Draw(Text_Debug_FollowMouse);
+            }
+            
 
             SB.End();
             
