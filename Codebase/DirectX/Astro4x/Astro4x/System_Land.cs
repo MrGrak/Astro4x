@@ -107,82 +107,105 @@ namespace Astro4x
         public static void GenMap()
         {
 
-            #region Create a water world with polar ice caps
+            #region Create a water world with/without polar ice caps
 
             for (int i = 0; i < totalTiles; i++)
             {
                 tiles[i].ID = TileID.Water_Deep;
 
+                /*
                 //create ice caps on top and bottom rows
-                if(i < tilesPerRow * 4) //top
+                if(i < tilesPerRow * 3) //top
                 {
-                    if (i < tilesPerRow * 2)
+                    if (i < tilesPerRow * 1)
                     {
                         tiles[i].ID = TileID.Snow;
                     }
                     else { tiles[i].ID = TileID.Water_Shallow; }
                 }
-                else if(i > totalTiles - (tilesPerRow * 4 + 1)) //bottom
+                else if(i > totalTiles - (tilesPerRow * 3 + 1)) //bottom
                 {
-                    if (i > totalTiles - (tilesPerRow * 2 + 1))
+                    if (i > totalTiles - (tilesPerRow * 1 + 1))
                     {
                         tiles[i].ID = TileID.Snow;
                     }
                     else { tiles[i].ID = TileID.Water_Shallow; }
                 }
+                */
             }
 
             #endregion
 
 
-            //create a land mass and grow it
-            //int seed = ScreenManager.RAND.Next(tilesPerRow * 8, totalTiles - (tilesPerRow * 8));
 
-            /*
-            //test all neighbors
-            Fill3x3(533, TileID.Grass); //572 610 649 687
-            Fill3x3(687, TileID.Grass);
-            Fill3x3(841, TileID.Grass);
-            Fill3x3(995, TileID.Grass);
-            */
+            #region Gen Some landmasses
 
-            //Fill3x3(533, TileID.Grass);
-            //+154
-
-            /*
-            //create diagonal line across map
+            for (int g = 0; g < 5; g++)
             {
-                int counter = 381;
-                for (int i = 0; i < 66; i++)
+                //start with a tile
+                int seedID = 1700;
+                
+                for(int i = 0; i < 20; i++)
                 {
-                    Fill3x3(counter, TileID.Grass);
-                    if (i % 2 == 0) { counter += tilesPerRow + 2; }
-                    else { counter += tilesPerRow + 1; }
+                    //fill seed and it's neighbors
+                    Fill3x3(seedID, TileID.Grass);
+
+                    //jiggle seed left and right
+                    seedID += ScreenManager.RAND.Next(-3, 4);
+
+                    //move seed up or down
+                    if (ScreenManager.RAND.Next(0, 101) > 50)
+                    { seedID -= tilesPerRow * 1; }
+                    else
+                    { seedID += tilesPerRow * 1; }
                 }
             }
-            */
 
-            /*
-            //create test lines across map
-            int start = 957;
-            for (int i = 0; i < 10; i++)
+            for (int g = 0; g < 5; g++)
             {
-                tiles[start].ID = TileID.Grass;
-                start = GetNeighbor(start, Direction.DownRight);
+                //start with a tile
+                int seedID = 1730;
+
+                for (int i = 0; i < 20; i++)
+                {
+                    //fill seed and it's neighbors
+                    Fill3x3(seedID, TileID.Grass);
+
+                    //jiggle seed left and right
+                    seedID += ScreenManager.RAND.Next(-3, 4);
+
+                    //move seed up or down
+                    if (ScreenManager.RAND.Next(0, 101) > 50)
+                    { seedID -= tilesPerRow * 1; }
+                    else
+                    { seedID += tilesPerRow * 1; }
+                }
             }
-            */
 
 
+            //loop over all tiles and add shallows around grass 
 
-
-            /*
-            //build random splotches
-            for(int i = 0; i < 50; i++)
+            for (int i = 0; i < totalTiles; i++)
             {
-                int id = ScreenManager.RAND.Next(400, totalTiles - 400);
-                Fill3x3(id, TileID.Grass);
+                if (tiles[i].ID == TileID.Grass)
+                {
+                    for (int p = 1; p < 9; p++)
+                    {
+                        int neighborID = GetNeighbor(i, (Direction)p);
+                        if(tiles[neighborID].ID == TileID.Water_Deep)
+                        {
+                            tiles[neighborID].ID = TileID.Water_Shallow;
+                        }
+                    }
+                }
             }
-            */
+
+
+
+            #endregion
+
+
+
 
 
         }

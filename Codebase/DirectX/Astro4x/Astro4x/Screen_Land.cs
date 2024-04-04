@@ -255,8 +255,11 @@ namespace Astro4x
                                 //"paint" tiles using RMB
                                 if(Input.currentMouseState.RightButton == ButtonState.Pressed)
                                 {
+                                    //fill selected 3x3
+                                    //System_Land.Fill3x3(i, TileID.Grass);
+
                                     //fill selected
-                                    System_Land.Fill3x3(i, TileID.Grass);
+                                    System_Land.tiles[i].ID = TileID.Grass;
                                 }
 
 
