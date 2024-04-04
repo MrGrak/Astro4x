@@ -138,56 +138,26 @@ namespace Astro4x
 
 
 
+
+
             #region Gen Some landmasses
 
-            for (int g = 0; g < 5; g++)
-            {
-                //start with a tile
-                int seedID = 1700;
-                
-                for(int i = 0; i < 20; i++)
-                {
-                    //fill seed and it's neighbors
-                    Fill3x3(seedID, TileID.Grass);
+            GenIsland(1710, TileID.Desert, 5, 0);
+            GenIsland(1720, TileID.Dirt, 5, 0);
+            GenIsland(1730, TileID.Grass, 5, 0);
 
-                    //jiggle seed left and right
-                    seedID += ScreenManager.RAND.Next(-3, 4);
-
-                    //move seed up or down
-                    if (ScreenManager.RAND.Next(0, 101) > 50)
-                    { seedID -= tilesPerRow * 1; }
-                    else
-                    { seedID += tilesPerRow * 1; }
-                }
-            }
-
-            for (int g = 0; g < 5; g++)
-            {
-                //start with a tile
-                int seedID = 1730;
-
-                for (int i = 0; i < 20; i++)
-                {
-                    //fill seed and it's neighbors
-                    Fill3x3(seedID, TileID.Grass);
-
-                    //jiggle seed left and right
-                    seedID += ScreenManager.RAND.Next(-3, 4);
-
-                    //move seed up or down
-                    if (ScreenManager.RAND.Next(0, 101) > 50)
-                    { seedID -= tilesPerRow * 1; }
-                    else
-                    { seedID += tilesPerRow * 1; }
-                }
-            }
+            GenIsland(1730, TileID.Desert, 5, 0);
+            GenIsland(1720, TileID.Dirt, 5, 0);
+            GenIsland(1710, TileID.Grass, 5, 0);
+            
+            GenIsland(1720, TileID.Plains, 1, 1);
 
 
             //loop over all tiles and add shallows around grass 
-
             for (int i = 0; i < totalTiles; i++)
             {
-                if (tiles[i].ID == TileID.Grass)
+                if (tiles[i].ID != TileID.Water_Deep 
+                    && tiles[i].ID != TileID.Water_Shallow)
                 {
                     for (int p = 1; p < 9; p++)
                     {
@@ -196,11 +166,21 @@ namespace Astro4x
                         {
                             tiles[neighborID].ID = TileID.Water_Shallow;
                         }
+
+                        /*
+                        //maybe add additional layer of shallows
+                        if (ScreenManager.RAND.Next(0, 101) > 80)
+                        {
+                            int nextNeigh = GetNeighbor(neighborID, (Direction)p);
+                            if (tiles[nextNeigh].ID == TileID.Water_Deep)
+                            {
+                                tiles[nextNeigh].ID = TileID.Water_Shallow;
+                            }
+                        }
+                        */
                     }
                 }
             }
-
-
 
             #endregion
 
@@ -266,6 +246,45 @@ namespace Astro4x
 
             return returnValue;
         }
+
+
+
+
+
+        public static void GenIsland(
+            int arrayIndex, TileID Type, int iterations, int fillType)
+        {
+            for (int g = 0; g < iterations; g++)
+            {
+                //start with a tile
+                int seedID = arrayIndex + (tilesPerRow * g);
+
+                for (int i = 0; i < 10; i++)
+                {
+                    //fill seed and it's neighbors
+                    if (fillType == 0)
+                    { Fill3x3(seedID, Type); }
+                    else 
+                    { tiles[seedID].ID = Type; }
+                    
+                    //jiggle seed left and right
+                    seedID += ScreenManager.RAND.Next(-3, 4);
+
+                    //move seed up or down
+                    if (ScreenManager.RAND.Next(0, 101) > 50)
+                    { seedID -= tilesPerRow * 1; }
+                    else
+                    { seedID += tilesPerRow * 1; }
+                }
+            }
+        }
+
+
+
+
+
+
+
 
 
 

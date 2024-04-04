@@ -5,14 +5,16 @@ Astro 4x TODO:
 
 
 
-generate some random landmasses
+
+
+
 
 develop a 3d perspective using 2d grid
 
 how do units look?
 
 should we be zooming out fully? can we make this look
-better?
+better? can we fix this with anti aliasing somehow?
 
 
 
