@@ -53,8 +53,8 @@ namespace Astro4x
 
         //screen references
         public static Screen_Land Land;
+        //...
 
-        
 
         public static void Constructor()
         {

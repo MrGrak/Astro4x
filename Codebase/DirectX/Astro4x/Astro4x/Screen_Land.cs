@@ -373,6 +373,9 @@ namespace Astro4x
                 SamplerState.PointClamp,
                 null, null, null, Camera2D.view);
 
+            //draw deep sea color as background
+            ScreenManager.GDM.GraphicsDevice.Clear(new Color(36,60,90));
+
             System_Land.Draw();
 
             //dont draw selected when zoomed out

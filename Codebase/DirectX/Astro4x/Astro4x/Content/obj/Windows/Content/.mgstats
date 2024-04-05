@@ -1,3 +1,3 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
 "C:/Users/Gx000000/Desktop/REPOs/Astro4x/Codebase/DirectX/Astro4x/Astro4x/Content/font_ui_eng.bmp","C:/Users/Gx000000/Desktop/REPOs/Astro4x/Codebase/DirectX/Astro4x/Astro4x/Content/bin/Windows/Content/font_ui_eng.xnb","FontTextureProcessor","SpriteFontContent",65592,45232,0.5396681
-"C:/Users/Gx000000/Desktop/REPOs/Astro4x/Codebase/DirectX/Astro4x/Astro4x/Content/sheet_Main.png","C:/Users/Gx000000/Desktop/REPOs/Astro4x/Codebase/DirectX/Astro4x/Astro4x/Content/bin/Windows/Content/sheet_Main.xnb","TextureProcessor","Texture2DContent",3349,1048661,0.6755914
+"C:/Users/Gx000000/Desktop/REPOs/Astro4x/Codebase/DirectX/Astro4x/Astro4x/Content/sheet_Main.png","C:/Users/Gx000000/Desktop/REPOs/Astro4x/Codebase/DirectX/Astro4x/Astro4x/Content/bin/Windows/Content/sheet_Main.xnb","TextureProcessor","Texture2DContent",3426,1048661,0.1818884

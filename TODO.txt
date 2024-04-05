@@ -9,15 +9,18 @@ Astro 4x TODO:
 
 
 
-when we zoom out, swap to simple ground tiles, so we dont
-get aliasing issues. done, looks great.
 
-camera can now move around while zoomed in.
 
 
 
 instead of drawing black, draw the deep sea color as background,
-this way we can hide the edges of the map better.
+this way we can hide the edges of the map better. done.
+
+
+remove the tile edges/highlights. done.
+
+
+
 
 
 
