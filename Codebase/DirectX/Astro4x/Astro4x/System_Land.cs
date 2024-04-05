@@ -173,7 +173,12 @@ namespace Astro4x
         public static void GenMap()
         {
 
+            //clear any current tileInfo on land
+            ScreenManager.Land.tileInfo.position.X = 9999;
+            ScreenManager.Land.tileInfo.text = "";
+            ScreenManager.Land.selectedTile.X = 9999;
 
+            //reset land aos 
             Reset();
             
             GenIsland(1710, TileID.Desert, 5);

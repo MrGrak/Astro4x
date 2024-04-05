@@ -22,6 +22,10 @@ namespace Astro4x
         public byte highliteAnimIndex = 0;
 
 
+        public Text tileInfo;
+
+
+
         public Screen_Land()
         {
             Name = "LAND";
@@ -42,6 +46,9 @@ namespace Astro4x
             //hide off screen for now
             highliteTile.X = -100; highliteTile.Y = -100;
             selectedTile.X = -100; selectedTile.Y = -100;
+
+            tileInfo = new Text("init", new Vector2(999, 999), Color.White);
+            tileInfo.layer = Layers.Debug_Text;
         }
 
         public override void Open()
@@ -193,8 +200,6 @@ namespace Astro4x
 
                     if (Camera2D.targetZoom == 1.0f)
                     {
-                        
-                        
                         int tileCounter = 0;
                         int yCounter = 1;
 
@@ -224,10 +229,7 @@ namespace Astro4x
                                 highliteTile.X = tilePos.X - 8;
                                 highliteTile.Y = tilePos.Y - 8;
 
-                                //notify debug screen
-                                ScreenManager.Text_Debug_FollowMouse.text = "TILE ID: " + i;
-                                ScreenManager.Text_Debug_FollowMouse.text += "\nROW: " + yCounter;
-                                ScreenManager.Text_Debug_FollowMouse.text += "\n";
+                                
 
                                 //check for LMB
                                 if (Input.IsNewLeftClick())
@@ -236,8 +238,15 @@ namespace Astro4x
                                     selectedTile.X = tilePos.X - 8;
                                     selectedTile.Y = tilePos.Y - 8;
 
-                                    Camera2D.targetPosition.X = selectedTile.X + 8;
-                                    Camera2D.targetPosition.Y = selectedTile.Y + 8;
+                                    //Camera2D.targetPosition.X = selectedTile.X + 8;
+                                    //Camera2D.targetPosition.Y = selectedTile.Y + 8;
+
+                                    //update tile info text
+                                    tileInfo.text = "ID: " + i + "." + System_Land.tiles[i].ID.ToString().ToUpper();
+                                    tileInfo.text += "\nROW: " + yCounter;
+
+                                    tileInfo.position.X = tilePos.X - 8;
+                                    tileInfo.position.Y = tilePos.Y + 10;
                                 }
 
                                 //check for RMB
@@ -288,7 +297,6 @@ namespace Astro4x
 
                     #endregion
                     
-
                 }
                 else if (Camera2D.targetZoom > 1.0f)
                 {
@@ -384,16 +392,36 @@ namespace Astro4x
 
             System_Land.Draw();
 
-            //dont draw selected when zoomed out
-            if (Camera2D.targetZoom >= 1.0f)
+
+
+
+            if(ScreenManager.activeScreen == this)
             {
-                ScreenManager.Draw(selectedTile);
+                //dont draw selected when zoomed out
+                if (Camera2D.targetZoom >= 1.0f)
+                {
+                    ScreenManager.Draw(selectedTile);
+
+                    
+
+
+                    Vector2 textSize = Assets.Assets_font_eng.MeasureString(tileInfo.text);
+
+                    ScreenManager.Draw(new Rectangle(
+                        (int)tileInfo.position.X - 2, (int)tileInfo.position.Y, 
+                        (int)textSize.X + 3, (int)textSize.Y + 1),
+                        Color.Black, 0.5f, Layers.Land_UI);
+
+                    ScreenManager.Draw(tileInfo);
+                }
+                //draw highlight tile only at interactive pov
+                if (Camera2D.targetZoom == 1.0f)
+                {
+                    ScreenManager.Draw(highliteTile);
+                }
             }
-            //draw highlight tile only at interactive pov
-            if(Camera2D.targetZoom == 1.0f)
-            {
-                ScreenManager.Draw(highliteTile);
-            }
+
+            
 
             ScreenManager.SB.End();
         }

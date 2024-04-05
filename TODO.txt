@@ -8,9 +8,13 @@ Astro 4x TODO:
 
 dev menu screen++
 
-spacebar should open dev menu on right. done.
 
-we have a button for generating world
+
+when i select a tile, display the tile info at that location,
+do not follow the cursor. this text info should also be part
+of the land screen/system. done.
+
+
 
 we have buttons that represent tiles we can click on,
 and then paint on the world via RMB
@@ -22,9 +26,7 @@ we have a button to load world data from file
 
 
 
-when i select a tile, display the tile info at that location,
-do not follow the cursor. this text info should also be part
-of the land screen/system.
+
 
 
 

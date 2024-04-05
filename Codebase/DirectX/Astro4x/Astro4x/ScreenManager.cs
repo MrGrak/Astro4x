@@ -47,7 +47,7 @@ namespace Astro4x
         public static Screen activeScreen;
         
         public static Text Text_Debug_LeftTop;
-        public static Text Text_Debug_FollowMouse;
+        //public static Text Text_Debug_FollowMouse;
         public static Stopwatch timer = new Stopwatch();
         public static long ticks = 0;
 
@@ -61,10 +61,7 @@ namespace Astro4x
         {
             Text_Debug_LeftTop = new Text("init", new Vector2(8, 5), Color.White);
             Text_Debug_LeftTop.layer = Layers.Debug_Text;
-
-            Text_Debug_FollowMouse = new Text("init", new Vector2(8, GAME_HEIGHT / 2), Color.White);
-            Text_Debug_FollowMouse.layer = Layers.Debug_Text;
-
+            
             //construct all screen instances
             Land = new Screen_Land();
             LandMenu = new Screen_Land_Dev();
@@ -140,14 +137,14 @@ namespace Astro4x
             
             
             //follow mouse around
-            Text_Debug_FollowMouse.position.X = Input.cursorPos_Screen.X + 8;
-            Text_Debug_FollowMouse.position.Y = Input.cursorPos_Screen.Y;
+            //Text_Debug_FollowMouse.position.X = Input.cursorPos_Screen.X + 8;
+            //Text_Debug_FollowMouse.position.Y = Input.cursorPos_Screen.Y;
 
             //draw debg info only at 1.0 zoom
             if (Camera2D.targetZoom == 1.0f)
             {
                 Draw(Text_Debug_LeftTop);
-                Draw(Text_Debug_FollowMouse);
+                
             }
             
 
