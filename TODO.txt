@@ -9,17 +9,15 @@ Astro 4x TODO:
 dev menu screen++
 
 
-
-when i select a tile, display the tile info at that location,
-do not follow the cursor. this text info should also be part
-of the land screen/system. done.
-
-
-
 we have buttons that represent tiles we can click on,
 and then paint on the world via RMB
 
-we have a button to save the world data
+we have a button to save the world data. done.
+we are also saving the planet data to a binary file with
+an ascii header, so people can id it if needed.
+
+
+
 
 we have a button to load world data from file
 

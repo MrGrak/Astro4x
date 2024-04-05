@@ -18,7 +18,7 @@ namespace Astro4x
 
         //buttons
         UI_Button genWorld;
-
+        UI_Button saveWorld;
 
 
         public Screen_Land_Dev()
@@ -31,7 +31,8 @@ namespace Astro4x
             genWorld = new UI_Button(new Vector2(0, 0), "GEN WORLD", windowWidth - 20);
             genWorld.text.color = Color.White;
 
-            
+            saveWorld = new UI_Button(new Vector2(0, 0), "SAVE WORLD", windowWidth - 20);
+            saveWorld.text.color = Color.White;
         }
 
         public override void Open()
@@ -101,7 +102,8 @@ namespace Astro4x
             
 
             #region handle button interactions
-
+            
+            //gen world
             if (genWorld.button.Contains(Input.cursorPos_Screen))
             {
                 genWorld.text.color = Color.Red;
@@ -113,6 +115,19 @@ namespace Astro4x
             {
                 genWorld.text.color = Color.White;
             }
+            
+            //save world
+            if (saveWorld.button.Contains(Input.cursorPos_Screen))
+            {
+                saveWorld.text.color = Color.Red;
+
+                if (Input.IsNewLeftClick())
+                { System_Land.SaveThePlanet("TEST"); }
+            }
+            else
+            {
+                saveWorld.text.color = Color.White;
+            }
 
             #endregion
 
@@ -120,11 +135,20 @@ namespace Astro4x
 
             #region match ui elements to window
 
+            //parent gen world to window
             genWorld.button.X = bkgWindow.X + 10;
-            genWorld.text.position.X = genWorld.button.X + 10;
-
             genWorld.button.Y = bkgWindow.Y + 10;
+            genWorld.text.position.X = genWorld.button.X + 10;
             genWorld.text.position.Y = genWorld.button.Y + 0;
+
+            //parent ui children to gen world
+            saveWorld.button.X = genWorld.button.X;
+            saveWorld.button.Y = genWorld.button.Y + 12;
+            saveWorld.text.position.X = saveWorld.button.X + 10;
+            saveWorld.text.position.Y = saveWorld.button.Y + 0;
+
+
+
 
             #endregion
 
@@ -143,8 +167,8 @@ namespace Astro4x
             //draw window, buttons, etc...
             ScreenManager.Draw(bkgWindow, Color.Black, 0.5f, Layers.Debug_Window);
             genWorld.Draw();
+            saveWorld.Draw();
 
-            
             ScreenManager.SB.End();
         }
 

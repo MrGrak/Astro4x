@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Diagnostics;
+using System.IO;
+
 
 namespace Astro4x
 {
@@ -251,7 +252,67 @@ namespace Astro4x
         }
 
 
+        //save tiles to file with string
 
+        public static bool SaveThePlanet(string name)
+        {
+            byte[] planetData;
+
+            using (MemoryStream stream = new MemoryStream())
+            {
+                using (BinaryWriter writer = new BinaryWriter(stream))
+                {
+                    //write an ascii header
+                    writer.Write((byte)'A'); writer.Write((byte)'S');
+                    writer.Write((byte)'T'); writer.Write((byte)'R');
+                    writer.Write((byte)'O'); writer.Write((byte)'4');
+                    writer.Write((byte)'X'); writer.Write((byte)'-');
+
+                    writer.Write((byte)'P'); writer.Write((byte)'L');
+                    writer.Write((byte)'A'); writer.Write((byte)'N');
+                    writer.Write((byte)'E'); writer.Write((byte)'T');
+                    writer.Write((byte)'-');
+
+                    writer.Write((byte)'F'); writer.Write((byte)'I');
+                    writer.Write((byte)'L'); writer.Write((byte)'E');
+                    writer.Write((byte)'-');
+
+                    writer.Write((byte)'V'); writer.Write((byte)'0');
+                    writer.Write((byte)'.'); writer.Write((byte)'1');
+                    writer.Write((byte)'-');
+
+                    //write all tile ids to byte array
+                    for (int i = 0; i < totalTiles; i++)
+                    { writer.Write((byte)tiles[i].ID); }
+                    
+                    planetData = stream.ToArray();
+                }
+            }
+
+            //C:\Users\<user>\AppData\Roaming\ - roaming is per user
+            string savePath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Astro4X");
+
+            //create dev save data folder
+            if (Directory.Exists(savePath) == false) { Directory.CreateDirectory(savePath); }
+
+            //determine file name and absolute path
+            string filePath = Path.Combine(savePath, name + ".astro");
+
+            try
+            {   //try writing land data to file
+                using (var stream = File.Open(filePath, FileMode.Create, FileAccess.Write))
+                { stream.Write(planetData, 0, planetData.Length); }
+                Console.WriteLine("land file written to " + filePath);
+                Console.WriteLine("total bytes written: " + planetData.Length);
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Save Failed: " + e.ToString());
+                return false;
+            }
+        }
 
 
 
