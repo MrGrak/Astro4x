@@ -6,18 +6,25 @@ Astro 4x TODO:
 
 
 
+dev menu screen++
+
+spacebar should open dev menu on right. done.
+
+we have a button for generating world
+
+we have buttons that represent tiles we can click on,
+and then paint on the world via RMB
+
+we have a button to save the world data
+
+we have a button to load world data from file
 
 
 
 
-
-
-
-instead of drawing black, draw the deep sea color as background,
-this way we can hide the edges of the map better. done.
-
-
-remove the tile edges/highlights. done.
+when i select a tile, display the tile info at that location,
+do not follow the cursor. this text info should also be part
+of the land screen/system.
 
 
 
@@ -26,6 +33,7 @@ remove the tile edges/highlights. done.
 
 
 improve landmass generation.
+
 we want to have starting tiles that represent city locations,
 which we could connect via roads (dirt tiles).
 

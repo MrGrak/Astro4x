@@ -79,7 +79,13 @@ namespace Astro4x
                 //generate a new world map via space
                 if(Input.IsNewKeyPress(Keys.Space))
                 {
-                    System_Land.GenMap();
+                    //System_Land.GenMap();
+
+                    //open the land devn menu
+                    if (Camera2D.targetZoom <= 1.0f && ScreenManager.activeScreen == this)
+                    {
+                        ScreenManager.AddScreen(ScreenManager.LandMenu);
+                    }
                 }
 
 

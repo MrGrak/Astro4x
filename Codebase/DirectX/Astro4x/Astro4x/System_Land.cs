@@ -41,7 +41,7 @@ namespace Astro4x
         {
             for(int i = 0; i < totalTiles; i++)
             {
-                tiles[i].ID = TileID.Grass;
+                tiles[i].ID = TileID.Water_Deep;
             }
         }
         
@@ -107,93 +107,9 @@ namespace Astro4x
             }
         }
 
-        //
-
-        public static void GenMap()
-        {
-
-            #region Create a water world with/without polar ice caps
-
-            for (int i = 0; i < totalTiles; i++)
-            {
-                tiles[i].ID = TileID.Water_Deep;
-
-                /*
-                //create ice caps on top and bottom rows
-                if(i < tilesPerRow * 3) //top
-                {
-                    if (i < tilesPerRow * 1)
-                    {
-                        tiles[i].ID = TileID.Snow;
-                    }
-                    else { tiles[i].ID = TileID.Water_Shallow; }
-                }
-                else if(i > totalTiles - (tilesPerRow * 3 + 1)) //bottom
-                {
-                    if (i > totalTiles - (tilesPerRow * 1 + 1))
-                    {
-                        tiles[i].ID = TileID.Snow;
-                    }
-                    else { tiles[i].ID = TileID.Water_Shallow; }
-                }
-                */
-            }
-
-            #endregion
 
 
-
-
-
-            #region Gen Some landmasses
-
-            GenIsland(1710, TileID.Desert, 5, 0);
-            GenIsland(1720, TileID.Dirt, 5, 0);
-            GenIsland(1730, TileID.Grass, 5, 0);
-
-            GenIsland(1730, TileID.Desert, 5, 0);
-            GenIsland(1720, TileID.Dirt, 5, 0);
-            GenIsland(1710, TileID.Grass, 5, 0);
-            
-            GenIsland(1720, TileID.Plains, 1, 1);
-
-
-            //loop over all tiles and add shallows around grass 
-            for (int i = 0; i < totalTiles; i++)
-            {
-                if (tiles[i].ID != TileID.Water_Deep 
-                    && tiles[i].ID != TileID.Water_Shallow)
-                {
-                    for (int p = 1; p < 9; p++)
-                    {
-                        int neighborID = GetNeighbor(i, (Direction)p);
-                        if(tiles[neighborID].ID == TileID.Water_Deep)
-                        {
-                            tiles[neighborID].ID = TileID.Water_Shallow;
-                        }
-
-                        /*
-                        //maybe add additional layer of shallows
-                        if (ScreenManager.RAND.Next(0, 101) > 80)
-                        {
-                            int nextNeigh = GetNeighbor(neighborID, (Direction)p);
-                            if (tiles[nextNeigh].ID == TileID.Water_Deep)
-                            {
-                                tiles[nextNeigh].ID = TileID.Water_Shallow;
-                            }
-                        }
-                        */
-                    }
-                }
-            }
-
-            #endregion
-
-
-
-
-
-        }
+        //utility methods
 
         public static void Fill3x3(int arrayIndex, TileID Type)
         {
@@ -252,12 +168,61 @@ namespace Astro4x
             return returnValue;
         }
 
+        //island generation rountines
+
+        public static void GenMap()
+        {
+
+
+            Reset();
+            
+            GenIsland(1710, TileID.Desert, 5);
+            GenIsland(1720, TileID.Dirt, 5);
+            GenIsland(1730, TileID.Grass, 5);
+
+            GenIsland(1730, TileID.Desert, 5);
+            GenIsland(1720, TileID.Dirt, 5);
+            GenIsland(1710, TileID.Grass, 5);
+
+            //GenIsland(1720, TileID.Plains, 1, 1);
+
+
+            //loop over all tiles and add shallows around land tiles 
+            for (int i = 0; i < totalTiles; i++)
+            {
+                if (tiles[i].ID != TileID.Water_Deep
+                    && tiles[i].ID != TileID.Water_Shallow)
+                {
+                    for (int p = 1; p < 9; p++)
+                    {
+                        int neighborID = GetNeighbor(i, (Direction)p);
+                        if (tiles[neighborID].ID == TileID.Water_Deep)
+                        {
+                            tiles[neighborID].ID = TileID.Water_Shallow;
+                        }
+
+                        /*
+                        //maybe add additional layer of shallows
+                        if (ScreenManager.RAND.Next(0, 101) > 80)
+                        {
+                            int nextNeigh = GetNeighbor(neighborID, (Direction)p);
+                            if (tiles[nextNeigh].ID == TileID.Water_Deep)
+                            {
+                                tiles[nextNeigh].ID = TileID.Water_Shallow;
+                            }
+                        }
+                        */
+                    }
+                }
+            }
+            
 
 
 
 
-        public static void GenIsland(
-            int arrayIndex, TileID Type, int iterations, int fillType)
+        }
+
+        public static void GenIsland(int arrayIndex, TileID Type, int iterations)
         {
             for (int g = 0; g < iterations; g++)
             {
@@ -266,11 +231,7 @@ namespace Astro4x
 
                 for (int i = 0; i < 10; i++)
                 {
-                    //fill seed and it's neighbors
-                    if (fillType == 0)
-                    { Fill3x3(seedID, Type); }
-                    else 
-                    { tiles[seedID].ID = Type; }
+                    Fill3x3(seedID, Type);
                     
                     //jiggle seed left and right
                     seedID += ScreenManager.RAND.Next(-3, 4);

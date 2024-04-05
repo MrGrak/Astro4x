@@ -15,7 +15,12 @@ namespace Astro4x
 
         public static float Land_UI = 0.400000f;
 
+
         public static float Debug_Window = 0.000009f;
-        public static float Debug_Text = 0.000008f;
+        public static float Debug_Btn = 0.000008f;
+        public static float Debug_Text = 0.000007f;
+
+
+
     }
 }

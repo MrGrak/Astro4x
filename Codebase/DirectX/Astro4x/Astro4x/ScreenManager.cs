@@ -53,6 +53,7 @@ namespace Astro4x
 
         //screen references
         public static Screen_Land Land;
+        public static Screen_Land_Dev LandMenu;
         //...
 
 
@@ -66,6 +67,10 @@ namespace Astro4x
 
             //construct all screen instances
             Land = new Screen_Land();
+            LandMenu = new Screen_Land_Dev();
+
+
+
 
             //boot to this screen first
             AddScreen(Land);
@@ -190,7 +195,20 @@ namespace Astro4x
                 SpriteEffects.None,
                 sprite.layer);
         }
-        
+
+        public static void Draw(Rectangle rec, Color color, float alpha, float layer)
+        {
+            SB.Draw(
+                Assets.lineTexture,
+                new Vector2(rec.X, rec.Y),
+                new Rectangle(0, 0, rec.Width, rec.Height),
+                color * alpha,
+                0.0f,
+                new Vector2(0, 0),
+                1.0f,
+                SpriteEffects.None,
+                layer);
+        }
 
     }
 }
