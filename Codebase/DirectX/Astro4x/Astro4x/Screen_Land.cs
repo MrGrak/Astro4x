@@ -286,7 +286,28 @@ namespace Astro4x
                 }
                 else if (Camera2D.targetZoom > 1.0f)
                 {
-                    //wait for player to zoom out
+
+                    #region Move Camera with keyboard input
+
+                    if (Input.IsKeyDown(Keys.D))
+                    {
+                        Camera2D.targetPosition.X += 2;
+                    }
+                    if (Input.IsKeyDown(Keys.A))
+                    {
+                        Camera2D.targetPosition.X -= 2;
+                    }
+
+                    if (Input.IsKeyDown(Keys.W))
+                    {
+                        Camera2D.targetPosition.Y -= 2;
+                    }
+                    if (Input.IsKeyDown(Keys.S))
+                    {
+                        Camera2D.targetPosition.Y += 2;
+                    }
+
+                    #endregion
                 }
                 else
                 {

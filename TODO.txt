@@ -9,7 +9,27 @@ Astro 4x TODO:
 
 
 
-develop a 3d perspective using 2d grid
+when we zoom out, swap to simple ground tiles, so we dont
+get aliasing issues. done, looks great.
+
+camera can now move around while zoomed in.
+
+
+
+instead of drawing black, draw the deep sea color as background,
+this way we can hide the edges of the map better.
+
+
+
+
+improve landmass generation.
+we want to have starting tiles that represent city locations,
+which we could connect via roads (dirt tiles).
+
+we need terrain control.
+
+
+
 
 how do units look?
 
@@ -17,16 +37,11 @@ should we be zooming out fully? can we make this look
 better? can we fix this with anti aliasing somehow?
 
 
-
-
-
-
 create a world view, using rotating 2d
 
 create a universe view, isometric
 
 create transition between those views
-
 
 
 
