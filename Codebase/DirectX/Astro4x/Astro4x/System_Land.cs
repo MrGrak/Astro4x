@@ -115,6 +115,7 @@ namespace Astro4x
         public static void Fill3x3(int arrayIndex, TileID Type)
         {
             if (arrayIndex >= totalTiles) { return; }
+            else if (arrayIndex < 0) { return; }
 
             tiles[arrayIndex].ID = Type;
 
@@ -169,33 +170,134 @@ namespace Astro4x
             return returnValue;
         }
 
+        public static void GenIsland(int arrayIndex, TileID Type, int iterations)
+        {
+            for (int g = 0; g < iterations; g++)
+            {
+                //start with a tile
+                int seedID = arrayIndex;
+
+                for (int i = 0; i < 10; i++)
+                {
+                    Fill3x3(seedID, Type);
+
+
+                    //make sure current X isn't too far left or right
+                    if (seedID / tilesPerRow > 5 &&
+                        seedID / tilesPerRow < tilesPerRow - 5)
+                    {
+                        //jiggle seed left and right
+                        seedID += ScreenManager.RAND.Next(-3, 4);
+                    }
+
+                    
+
+
+                    //make sure current row isn't first or last few
+                    if (seedID > tilesPerRow * 5 &&
+                        seedID < totalTiles - tilesPerRow * 5)
+                    {
+                        //move seed up or down
+                        if (ScreenManager.RAND.Next(0, 101) > 50)
+                        { seedID -= tilesPerRow * 1; }
+                        else
+                        { seedID += tilesPerRow * 1; }
+
+                        //move seed up or down
+                        if (ScreenManager.RAND.Next(0, 101) > 90)
+                        {
+                            if (ScreenManager.RAND.Next(0, 101) > 50)
+                            { seedID -= tilesPerRow * 2; }
+                            else
+                            { seedID += tilesPerRow * 2; }
+                        }
+                    }
+
+
+
+                }
+            }
+        }
+
+        public static void FillinLoneTiles()
+        {
+            for (int i = 0; i < totalTiles; i++)
+            {
+                //check horizontal neighbors to see if lone tile
+                TileID leftN = tiles[GetNeighbor(i, Direction.Left)].ID;
+                TileID rightN = tiles[GetNeighbor(i, Direction.Right)].ID;
+                //check vertical neighbors
+                TileID upN = tiles[GetNeighbor(i, Direction.Up)].ID;
+                TileID downN = tiles[GetNeighbor(i, Direction.Down)].ID;
+
+                if (leftN == rightN && upN == downN && leftN == upN)
+                {
+                    tiles[i].ID = leftN;
+                }
+            }
+        }
+
+
         //island generation rountines
 
-        public static void GenMap()
+        public static void GenMap_Tropical()
         {
-
+            Reset();
             //clear any current tileInfo on land
             ScreenManager.Land.tileInfo.position.X = 9999;
             ScreenManager.Land.tileInfo.text = "";
             ScreenManager.Land.selectedTile.X = 9999;
 
-            //reset land aos 
-            Reset();
+
+
+            //start with two 'city' locations that we will bridge together
+            int cityA = 1228;
+            int cityB = 2209;
             
-            GenIsland(1710, TileID.Desert, 5);
-            GenIsland(1720, TileID.Dirt, 5);
-            GenIsland(1730, TileID.Grass, 5);
+            //create coastlines around cities
+            GenIsland(cityA, TileID.Desert, 10);
+            GenIsland(cityB, TileID.Desert, 10);
 
-            GenIsland(1730, TileID.Desert, 5);
-            GenIsland(1720, TileID.Dirt, 5);
-            GenIsland(1710, TileID.Grass, 5);
+            //create fill coastlines between cities
+            GenIsland(1630, TileID.Desert, 10);
+            GenIsland(1807, TileID.Desert, 10);
 
-            //GenIsland(1720, TileID.Plains, 1, 1);
-
-
-            //loop over all tiles and add shallows around land tiles 
+            //create islands in corners
+            GenIsland(853, TileID.Desert, 3);
+            GenIsland(2660, TileID.Desert, 3);
+            
+            //create grass within bounds of desert
             for (int i = 0; i < totalTiles; i++)
             {
+                if (tiles[i].ID == TileID.Desert)
+                {
+                    bool flipToForest = true;
+                    for (int p = 1; p < 9; p++)
+                    {
+                        int neighborID = GetNeighbor(i, (Direction)p);
+                        if (tiles[neighborID].ID == TileID.Water_Deep)
+                        { flipToForest = false; }
+                    }
+                    if (flipToForest) { tiles[i].ID = TileID.Grass; }
+                }
+            }
+            
+            //fill in lone desert tiles
+            for (int i = 0; i < totalTiles; i++)
+            {
+                TileID leftN = tiles[GetNeighbor(i, Direction.Left)].ID;
+                TileID rightN = tiles[GetNeighbor(i, Direction.Right)].ID;
+                TileID upN = tiles[GetNeighbor(i, Direction.Up)].ID;
+                TileID downN = tiles[GetNeighbor(i, Direction.Down)].ID;
+                //check for surrounding desert tiles
+                if (leftN == TileID.Desert && 
+                    leftN == rightN && upN == downN && leftN == upN)
+                { tiles[i].ID = leftN; }
+            }
+            
+            for (int i = 0; i < totalTiles; i++)
+            {
+                //add shallows around land tiles 
                 if (tiles[i].ID != TileID.Water_Deep
                     && tiles[i].ID != TileID.Water_Shallow)
                 {
@@ -203,53 +305,99 @@ namespace Astro4x
                     {
                         int neighborID = GetNeighbor(i, (Direction)p);
                         if (tiles[neighborID].ID == TileID.Water_Deep)
-                        {
-                            tiles[neighborID].ID = TileID.Water_Shallow;
-                        }
+                        { tiles[neighborID].ID = TileID.Water_Shallow; }
+                    }
+                }
+                
+                //define cities and connect them
+                if (i == cityA) { tiles[i].ID = TileID.Dirt; }
+                else if (i == cityB) { tiles[i].ID = TileID.Dirt; }
+            }
 
-                        /*
-                        //maybe add additional layer of shallows
-                        if (ScreenManager.RAND.Next(0, 101) > 80)
-                        {
-                            int nextNeigh = GetNeighbor(neighborID, (Direction)p);
-                            if (tiles[nextNeigh].ID == TileID.Water_Deep)
-                            {
-                                tiles[nextNeigh].ID = TileID.Water_Shallow;
-                            }
-                        }
-                        */
+            //clear 1st and last tile to deep water
+            tiles[0].ID = TileID.Water_Deep;
+            tiles[totalTiles-1].ID = TileID.Water_Deep;
+        }
+
+        public static void GenMap_Rocky()
+        {
+            Reset();
+            //clear any current tileInfo on land
+            ScreenManager.Land.tileInfo.position.X = 9999;
+            ScreenManager.Land.tileInfo.text = "";
+            ScreenManager.Land.selectedTile.X = 9999;
+
+            //reset land to dirt
+            for (int i = 0; i < totalTiles; i++)
+            {
+                tiles[i].ID = TileID.Dirt;
+            }
+        }
+
+        public static void GenMap_Oasis()
+        {
+            Reset();
+            //clear any current tileInfo on land
+            ScreenManager.Land.tileInfo.position.X = 9999;
+            ScreenManager.Land.tileInfo.text = "";
+            ScreenManager.Land.selectedTile.X = 9999;
+
+            //reset land to desert
+            for (int i = 0; i < totalTiles; i++)
+            {
+                tiles[i].ID = TileID.Desert;
+            }
+            
+            //create water in central area
+            GenIsland(1228, TileID.Water_Deep, 10);
+            GenIsland(1799, TileID.Water_Deep, 10);
+            GenIsland(2209, TileID.Water_Deep, 10);
+
+            //fill in deep water lone tiles
+            for (int i = 0; i < totalTiles; i++)
+            {
+                TileID leftN = tiles[GetNeighbor(i, Direction.Left)].ID;
+                TileID rightN = tiles[GetNeighbor(i, Direction.Right)].ID;
+                TileID upN = tiles[GetNeighbor(i, Direction.Up)].ID;
+                TileID downN = tiles[GetNeighbor(i, Direction.Down)].ID;
+                //check for surrounding desert tiles
+                if (leftN == TileID.Water_Deep &&
+                    leftN == rightN && upN == downN && leftN == upN)
+                { tiles[i].ID = leftN; }
+            }
+            
+            //add shallows around deep water tiles 
+            for (int i = 0; i < totalTiles; i++)
+            {
+                if (tiles[i].ID == TileID.Water_Deep)
+                {
+                    for (int p = 1; p < 9; p++)
+                    {
+                        int neighborID = GetNeighbor(i, (Direction)p);
+                        if (tiles[neighborID].ID == TileID.Desert)
+                        { tiles[neighborID].ID = TileID.Water_Shallow; }
                     }
                 }
             }
-            
-
-
 
 
         }
 
-        public static void GenIsland(int arrayIndex, TileID Type, int iterations)
+        public static void GenMap_Artic()
         {
-            for (int g = 0; g < iterations; g++)
+            Reset();
+            //clear any current tileInfo on land
+            ScreenManager.Land.tileInfo.position.X = 9999;
+            ScreenManager.Land.tileInfo.text = "";
+            ScreenManager.Land.selectedTile.X = 9999;
+
+            //reset land to snow/ice
+            for (int i = 0; i < totalTiles; i++)
             {
-                //start with a tile
-                int seedID = arrayIndex + (tilesPerRow * g);
-
-                for (int i = 0; i < 10; i++)
-                {
-                    Fill3x3(seedID, Type);
-                    
-                    //jiggle seed left and right
-                    seedID += ScreenManager.RAND.Next(-3, 4);
-
-                    //move seed up or down
-                    if (ScreenManager.RAND.Next(0, 101) > 50)
-                    { seedID -= tilesPerRow * 1; }
-                    else
-                    { seedID += tilesPerRow * 1; }
-                }
+                tiles[i].ID = TileID.Snow;
             }
         }
+
 
 
         //save tiles to file with string

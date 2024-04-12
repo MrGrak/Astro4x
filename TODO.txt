@@ -1,66 +1,40 @@
 
-
-
 Astro 4x TODO:
+
+improve world generation routines for all planet types
+add more tile types to help fill out planet landscapes
+rocky planets are pretty boring, for example
+we also need more types of cold terrain for artic planets
+moon surfaces, for example, would be gray rock, so add those tiles
+moons can be landed on and pillaged for resources, same size as planets
+
+create planet view screen, which is central sprite with orbiting moons
+we should be able to 'zoom out' to this planet view from land view
+
+we have 4 different planet types we can display here
+plus different star types
+
+
 
 
 
 
 dev menu screen++
 
+add a button to load world data from file
+
+this should give us a file explorer to choose file from,
+we select it, it populates the land tiles from data. ez.
+
+
 
 we have buttons that represent tiles we can click on,
-and then paint on the world via RMB
+and then paint on the world via RMB. these tiles are
+located underneath the save/load buttons. they can have
+a text field to describe them too.
 
-we have a button to save the world data. done.
-we are also saving the planet data to a binary file with
-an ascii header, so people can id it if needed.
-
-
+we should have all basic land tiles represented.
 
 
-we have a button to load world data from file
-
-
-
-
-
-
-
-
-
-
-
-
-improve landmass generation.
-
-we want to have starting tiles that represent city locations,
-which we could connect via roads (dirt tiles).
-
-we need terrain control.
-
-
-
-
-how do units look?
-
-should we be zooming out fully? can we make this look
-better? can we fix this with anti aliasing somehow?
-
-
-create a world view, using rotating 2d
 
 create a universe view, isometric
-
-create transition between those views
-
-
-
-
-
-barbarian huts
-small civs that dont progress past 1st age, harder than barbs
-roaming bandits (so we have threats late game too)
-
-each race should have it's own bonuses
-
