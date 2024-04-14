@@ -8,7 +8,7 @@ namespace Astro4x
 {
     public enum TileID : byte
     {
-        Grass, Plains, Dirt, Desert, Snow, Water_Shallow, Water_Deep,
+        Grass, Plains, Dirt, Desert, Snow, Water_Shallow, Water_Deep, MoonDirt,
     }
     public struct Tile //est. 1 bytes
     {

@@ -444,7 +444,20 @@ namespace Astro4x
             }
         }
 
+        public static void GenMap_Moon()
+        {
+            Reset();
+            //clear any current tileInfo on land
+            ScreenManager.Land.tileInfo.position.X = 9999;
+            ScreenManager.Land.tileInfo.text = "";
+            ScreenManager.Land.selectedTile.X = 9999;
 
+            //reset land to dirt
+            for (int i = 0; i < totalTiles; i++)
+            {
+                tiles[i].ID = TileID.MoonDirt;
+            }
+        }
 
         //save tiles to file with string
 

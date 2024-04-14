@@ -21,6 +21,7 @@ namespace Astro4x
         UI_Button genWorld_rocky;
         UI_Button genWorld_oasis;
         UI_Button genWorld_artic;
+        UI_Button genWorld_moon;
 
         UI_Button saveWorld;
 
@@ -43,7 +44,10 @@ namespace Astro4x
 
             genWorld_artic = new UI_Button(new Vector2(0, 0), "GEN ARTIC", windowWidth - 20);
             genWorld_artic.text.color = Color.White;
-            
+
+            genWorld_moon = new UI_Button(new Vector2(0, 0), "GEN MOON", windowWidth - 20);
+            genWorld_moon.text.color = Color.White;
+
             saveWorld = new UI_Button(new Vector2(0, 0), "SAVE WORLD", windowWidth - 20);
             saveWorld.text.color = Color.White;
         }
@@ -107,7 +111,14 @@ namespace Astro4x
                 else
                 { genWorld_artic.text.color = Color.White; }
 
-
+                //gen moon
+                if (genWorld_moon.button.Contains(Input.cursorPos_Screen))
+                {
+                    genWorld_moon.text.color = Color.Red;
+                    if (Input.IsNewLeftClick()) { System_Land.GenMap_Moon(); }
+                }
+                else
+                { genWorld_moon.text.color = Color.White; }
 
 
                 //save world
@@ -188,10 +199,18 @@ namespace Astro4x
             genWorld_artic.text.position.X = genWorld_artic.button.X + 10;
             genWorld_artic.text.position.Y = genWorld_artic.button.Y + 0;
 
+            genWorld_moon.button.X = genWorld_artic.button.X;
+            genWorld_moon.button.Y = genWorld_artic.button.Y + 12;
+            genWorld_moon.text.position.X = genWorld_moon.button.X + 10;
+            genWorld_moon.text.position.Y = genWorld_moon.button.Y + 0;
+
+
+
+
 
             //parent ui children to gen world
-            saveWorld.button.X = genWorld_artic.button.X;
-            saveWorld.button.Y = genWorld_artic.button.Y + 12;
+            saveWorld.button.X = genWorld_moon.button.X;
+            saveWorld.button.Y = genWorld_moon.button.Y + 12;
             saveWorld.text.position.X = saveWorld.button.X + 10;
             saveWorld.text.position.Y = saveWorld.button.Y + 0;
 
@@ -210,11 +229,12 @@ namespace Astro4x
                 null, null, null, null);
 
             //draw window, buttons, etc...
-            ScreenManager.Draw(bkgWindow, Color.Black, 0.5f, Layers.Debug_Window);
+            ScreenManager.Draw(bkgWindow, Color.Black, 0.9f, Layers.Debug_Window);
             genWorld_tropical.Draw();
             genWorld_rocky.Draw();
             genWorld_oasis.Draw();
             genWorld_artic.Draw();
+            genWorld_moon.Draw();
 
             saveWorld.Draw();
 
