@@ -1,3 +1,4 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
 "C:/Users/Gx000000/Desktop/REPOs/Astro4x/Codebase/DirectX/Astro4x/Astro4x/Content/font_ui_eng.bmp","C:/Users/Gx000000/Desktop/REPOs/Astro4x/Codebase/DirectX/Astro4x/Astro4x/Content/bin/Windows/font_ui_eng.xnb","FontTextureProcessor","SpriteFontContent",65592,45249,0.2758907
-"C:/Users/Gx000000/Desktop/REPOs/Astro4x/Codebase/DirectX/Astro4x/Astro4x/Content/sheet_Main.png","C:/Users/Gx000000/Desktop/REPOs/Astro4x/Codebase/DirectX/Astro4x/Astro4x/Content/bin/Windows/sheet_Main.xnb","TextureProcessor","Texture2DContent",22481,16777301,0.6513922
+"C:/Users/Gx000000/Desktop/REPOs/Astro4x/Codebase/DirectX/Astro4x/Astro4x/Content/sheet_Land.png","C:/Users/Gx000000/Desktop/REPOs/Astro4x/Codebase/DirectX/Astro4x/Astro4x/Content/bin/Windows/sheet_Land.xnb","TextureProcessor","Texture2DContent",2082,296021,0.2343344
+"C:/Users/Gx000000/Desktop/REPOs/Astro4x/Codebase/DirectX/Astro4x/Astro4x/Content/sheet_Main.png","C:/Users/Gx000000/Desktop/REPOs/Astro4x/Codebase/DirectX/Astro4x/Astro4x/Content/bin/Windows/sheet_Main.xnb","TextureProcessor","Texture2DContent",3181,1048661,0.0490466

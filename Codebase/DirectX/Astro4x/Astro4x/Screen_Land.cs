@@ -243,7 +243,7 @@ namespace Astro4x
                                     //Camera2D.targetPosition.Y = selectedTile.Y + 8;
 
                                     //update tile info text
-                                    tileInfo.text = "ID: " + i + "." + System_Land.tiles[i].ID.ToString().ToUpper();
+                                    tileInfo.text = "ID: " + i + "." + System_Land.tiles[i].ID_X.ToString().ToUpper();
                                     tileInfo.text += "\nROW: " + yCounter;
 
                                     tileInfo.position.X = tilePos.X - 8;
@@ -275,7 +275,7 @@ namespace Astro4x
                                     //System_Land.Fill3x3(i, TileID.Grass);
 
                                     //fill selected
-                                    System_Land.tiles[i].ID = TileID.Grass;
+                                    System_Land.tiles[i].ID_X = TileID.Grass;
                                 }
 
 
@@ -401,7 +401,7 @@ namespace Astro4x
                 //dont draw selected when zoomed out
                 if (Camera2D.targetZoom >= 1.0f)
                 {
-                    ScreenManager.Draw(selectedTile);
+                    ScreenManager.Draw(selectedTile, Assets.sheet_Land);
 
                     
 
@@ -418,7 +418,7 @@ namespace Astro4x
                 //draw highlight tile only at interactive pov
                 if (Camera2D.targetZoom == 1.0f)
                 {
-                    ScreenManager.Draw(highliteTile);
+                    ScreenManager.Draw(highliteTile, Assets.sheet_Land);
                 }
             }
 

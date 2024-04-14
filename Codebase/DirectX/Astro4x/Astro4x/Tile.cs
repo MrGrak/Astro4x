@@ -14,6 +14,6 @@ namespace Astro4x
     }
     public struct Tile //est. 1 bytes
     {
-        public TileID ID;
+        public TileID ID_X;
     }
 }

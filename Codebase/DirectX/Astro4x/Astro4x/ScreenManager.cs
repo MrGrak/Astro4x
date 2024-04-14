@@ -173,7 +173,7 @@ namespace Astro4x
                 Text.scale, SpriteEffects.None, Text.layer);
         }
 
-        public static void Draw(SpriteStruct sprite)
+        public static void Draw(SpriteStruct sprite, Texture2D Tex)
         {
             Rectangle DrawRec;
             DrawRec.X = sprite.draw_x;
@@ -182,7 +182,7 @@ namespace Astro4x
             DrawRec.Height = sprite.draw_height;
 
             SB.Draw(
-                Assets.sheet_Main,
+                Tex,
                 new Vector2(sprite.X, sprite.Y), 
                 DrawRec,
                 Color.White * sprite.alpha,

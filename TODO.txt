@@ -1,12 +1,20 @@
 
 Astro 4x TODO:
 
+
+
+
+
+we need to have 2 bytes in each tile, to describe the X,Y draw rec
+
+we need to serialize this too
+
+
+
 improve world generation routines for all planet types
 add more tile types to help fill out planet landscapes
 rocky planets are pretty boring, for example
 we also need more types of cold terrain for artic planets
-moon surfaces, for example, would be gray rock, so add those tiles
-moons can be landed on and pillaged for resources, same size as planets
 
 create planet view screen, which is central sprite with orbiting moons
 we should be able to 'zoom out' to this planet view from land view
