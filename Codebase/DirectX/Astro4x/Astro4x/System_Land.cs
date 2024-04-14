@@ -310,13 +310,14 @@ namespace Astro4x
                 }
                 
                 //define cities and connect them
-                if (i == cityA) { tiles[i].ID = TileID.Dirt; }
-                else if (i == cityB) { tiles[i].ID = TileID.Dirt; }
+                //if (i == cityA) { tiles[i].ID = TileID.Dirt; }
+                //else if (i == cityB) { tiles[i].ID = TileID.Dirt; }
             }
 
             //clear 1st and last tile to deep water
-            tiles[0].ID = TileID.Water_Deep;
-            tiles[totalTiles-1].ID = TileID.Water_Deep;
+            //tiles[0].ID = TileID.Water_Deep;
+            //tiles[totalTiles-1].ID = TileID.Water_Deep;
+            //we should be clearing rows and columns, probably
         }
 
         public static void GenMap_Rocky()
@@ -400,8 +401,32 @@ namespace Astro4x
                     }
                 }
             }
-            
-            
+
+            //collect a list of current grass tiles
+            List<int> grassTiles = new List<int>(500);
+            for (int i = 0; i < totalTiles; i++)
+            {
+                if (tiles[i].ID == TileID.Grass)
+                { grassTiles.Add(i); }
+            }
+            //loop list of grass tiles, swap desert neighbors to grass
+            for (int i = 0; i < grassTiles.Count; i++)
+            {
+                if (tiles[grassTiles[i]].ID == TileID.Grass)
+                {
+                    for (int p = 1; p < 9; p++)
+                    {
+                        int neighborID = GetNeighbor(grassTiles[i], (Direction)p);
+                        if (tiles[neighborID].ID == TileID.Desert)
+                        { tiles[neighborID].ID = TileID.Grass; }
+                    }
+                }
+            }
+
+
+
+
+
         }
 
         public static void GenMap_Artic()
