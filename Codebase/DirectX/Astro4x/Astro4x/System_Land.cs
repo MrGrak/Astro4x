@@ -353,20 +353,27 @@ namespace Astro4x
             GenIsland(1799, TileID.Water_Deep, 10);
             GenIsland(2209, TileID.Water_Deep, 10);
 
-            //fill in deep water lone tiles
-            for (int i = 0; i < totalTiles; i++)
+            //fill in lone tiles with deep water
+            for (int g = 0; g < 5; g++)
             {
-                TileID leftN = tiles[GetNeighbor(i, Direction.Left)].ID;
-                TileID rightN = tiles[GetNeighbor(i, Direction.Right)].ID;
-                TileID upN = tiles[GetNeighbor(i, Direction.Up)].ID;
-                TileID downN = tiles[GetNeighbor(i, Direction.Down)].ID;
-                //check for surrounding desert tiles
-                if (leftN == TileID.Water_Deep &&
-                    leftN == rightN && upN == downN && leftN == upN)
-                { tiles[i].ID = leftN; }
+                for (int i = 0; i < totalTiles; i++)
+                {
+                    TileID leftN = tiles[GetNeighbor(i, Direction.Left)].ID;
+                    TileID rightN = tiles[GetNeighbor(i, Direction.Right)].ID;
+                    TileID upN = tiles[GetNeighbor(i, Direction.Up)].ID;
+                    TileID downN = tiles[GetNeighbor(i, Direction.Down)].ID;
+                    
+                    //check horizontal
+                    if(leftN == TileID.Water_Deep && leftN == rightN)
+                    { tiles[i].ID = leftN; }
+
+                    //check vertical
+                    if (upN == TileID.Water_Deep && upN == downN)
+                    { tiles[i].ID = upN; }
+                }
             }
-            
-            //add shallows around deep water tiles 
+
+            //add shallows on deep water if desert tile is neighbor
             for (int i = 0; i < totalTiles; i++)
             {
                 if (tiles[i].ID == TileID.Water_Deep)
@@ -375,12 +382,26 @@ namespace Astro4x
                     {
                         int neighborID = GetNeighbor(i, (Direction)p);
                         if (tiles[neighborID].ID == TileID.Desert)
-                        { tiles[neighborID].ID = TileID.Water_Shallow; }
+                        { tiles[i].ID = TileID.Water_Shallow; }
                     }
                 }
             }
 
-
+            //add grass around the desert tiles near deep water
+            for (int i = 0; i < totalTiles; i++)
+            {
+                if (tiles[i].ID == TileID.Desert)
+                {
+                    for (int p = 1; p < 9; p++)
+                    {
+                        int neighborID = GetNeighbor(i, (Direction)p);
+                        if (tiles[neighborID].ID == TileID.Water_Shallow)
+                        { tiles[i].ID = TileID.Grass; }
+                    }
+                }
+            }
+            
+            
         }
 
         public static void GenMap_Artic()
