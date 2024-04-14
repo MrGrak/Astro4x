@@ -181,27 +181,27 @@ namespace Astro4x
             //parent gen world buttons to top of window
             genWorld_tropical.button.X = bkgWindow.X + 10;
             genWorld_tropical.button.Y = bkgWindow.Y + 10;
-            genWorld_tropical.text.position.X = genWorld_tropical.button.X + 10;
+            genWorld_tropical.text.position.X = genWorld_tropical.button.X + 5;
             genWorld_tropical.text.position.Y = genWorld_tropical.button.Y + 0;
 
             genWorld_rocky.button.X = genWorld_tropical.button.X;
             genWorld_rocky.button.Y = genWorld_tropical.button.Y + 12;
-            genWorld_rocky.text.position.X = genWorld_rocky.button.X + 10;
+            genWorld_rocky.text.position.X = genWorld_rocky.button.X + 5;
             genWorld_rocky.text.position.Y = genWorld_rocky.button.Y + 0;
 
             genWorld_oasis.button.X = genWorld_rocky.button.X;
             genWorld_oasis.button.Y = genWorld_rocky.button.Y + 12;
-            genWorld_oasis.text.position.X = genWorld_oasis.button.X + 10;
+            genWorld_oasis.text.position.X = genWorld_oasis.button.X + 5;
             genWorld_oasis.text.position.Y = genWorld_oasis.button.Y + 0;
 
             genWorld_artic.button.X = genWorld_oasis.button.X;
             genWorld_artic.button.Y = genWorld_oasis.button.Y + 12;
-            genWorld_artic.text.position.X = genWorld_artic.button.X + 10;
+            genWorld_artic.text.position.X = genWorld_artic.button.X + 5;
             genWorld_artic.text.position.Y = genWorld_artic.button.Y + 0;
 
             genWorld_moon.button.X = genWorld_artic.button.X;
             genWorld_moon.button.Y = genWorld_artic.button.Y + 12;
-            genWorld_moon.text.position.X = genWorld_moon.button.X + 10;
+            genWorld_moon.text.position.X = genWorld_moon.button.X + 5;
             genWorld_moon.text.position.Y = genWorld_moon.button.Y + 0;
 
 
@@ -211,7 +211,7 @@ namespace Astro4x
             //parent ui children to gen world
             saveWorld.button.X = genWorld_moon.button.X;
             saveWorld.button.Y = genWorld_moon.button.Y + 12;
-            saveWorld.text.position.X = saveWorld.button.X + 10;
+            saveWorld.text.position.X = saveWorld.button.X + 5;
             saveWorld.text.position.Y = saveWorld.button.Y + 0;
 
 

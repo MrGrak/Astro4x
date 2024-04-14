@@ -331,8 +331,49 @@ namespace Astro4x
             //reset land to dirt
             for (int i = 0; i < totalTiles; i++)
             {
-                tiles[i].ID = TileID.Dirt;
+                tiles[i].ID = TileID.Dirt_Mars;
             }
+
+            //start with two 'city' locations
+            int cityA = 1228;
+            int cityB = 2209;
+
+            //create dirt islands
+            GenIsland(cityA, TileID.Dirt_Brown, 10);
+            GenIsland(cityB, TileID.Dirt_Brown, 10);
+
+            //create dirt islands between cities
+            GenIsland(1630, TileID.Dirt_Brown, 10);
+            GenIsland(1807, TileID.Dirt_Brown, 10);
+
+            //create dirt islands in corners
+            GenIsland(853, TileID.Dirt_Brown, 3);
+            GenIsland(2660, TileID.Dirt_Brown, 3);
+
+
+
+            //fill in lone tiles with Dirt_Brown
+            for (int g = 0; g < 5; g++)
+            {
+                for (int i = 0; i < totalTiles; i++)
+                {
+                    TileID leftN = tiles[GetNeighbor(i, Direction.Left)].ID;
+                    TileID rightN = tiles[GetNeighbor(i, Direction.Right)].ID;
+                    TileID upN = tiles[GetNeighbor(i, Direction.Up)].ID;
+                    TileID downN = tiles[GetNeighbor(i, Direction.Down)].ID;
+
+                    //check horizontal
+                    if (leftN == TileID.Dirt_Brown && leftN == rightN)
+                    { tiles[i].ID = leftN; }
+
+                    //check vertical
+                    if (upN == TileID.Dirt_Brown && upN == downN)
+                    { tiles[i].ID = upN; }
+                }
+            }
+
+
+
         }
 
         public static void GenMap_Oasis()
@@ -442,6 +483,45 @@ namespace Astro4x
             {
                 tiles[i].ID = TileID.Snow;
             }
+
+            //start with two 'city' locations
+            int cityA = 1228;
+            int cityB = 2209;
+
+            //create dirt islands
+            GenIsland(cityA, TileID.Dirt_Brown, 10);
+            GenIsland(cityB, TileID.Dirt_Brown, 10);
+
+            //create dirt islands between cities
+            GenIsland(1630, TileID.Dirt_Brown, 10);
+            GenIsland(1807, TileID.Dirt_Brown, 10);
+
+            //create dirt islands in corners
+            GenIsland(853, TileID.Dirt_Brown, 3);
+            GenIsland(2660, TileID.Dirt_Brown, 3);
+
+
+
+
+            //fill in lone tiles with Dirt_Brown
+            for (int g = 0; g < 5; g++)
+            {
+                for (int i = 0; i < totalTiles; i++)
+                {
+                    TileID leftN = tiles[GetNeighbor(i, Direction.Left)].ID;
+                    TileID rightN = tiles[GetNeighbor(i, Direction.Right)].ID;
+                    TileID upN = tiles[GetNeighbor(i, Direction.Up)].ID;
+                    TileID downN = tiles[GetNeighbor(i, Direction.Down)].ID;
+
+                    //check horizontal
+                    if (leftN == TileID.Dirt_Brown && leftN == rightN)
+                    { tiles[i].ID = leftN; }
+
+                    //check vertical
+                    if (upN == TileID.Dirt_Brown && upN == downN)
+                    { tiles[i].ID = upN; }
+                }
+            }
         }
 
         public static void GenMap_Moon()
@@ -455,7 +535,46 @@ namespace Astro4x
             //reset land to dirt
             for (int i = 0; i < totalTiles; i++)
             {
-                tiles[i].ID = TileID.MoonDirt;
+                tiles[i].ID = TileID.Dirt_Gray;
+            }
+
+            //start with two 'city' locations
+            int cityA = 1228;
+            int cityB = 2209;
+
+            //create dirt islands
+            GenIsland(cityA, TileID.Dirt_Brown, 10);
+            GenIsland(cityB, TileID.Dirt_Brown, 10);
+
+            //create dirt islands between cities
+            GenIsland(1630, TileID.Dirt_Brown, 10);
+            GenIsland(1807, TileID.Dirt_Brown, 10);
+
+            //create dirt islands in corners
+            GenIsland(853, TileID.Dirt_Brown, 3);
+            GenIsland(2660, TileID.Dirt_Brown, 3);
+
+
+
+
+            //fill in lone tiles with Dirt_Brown
+            for (int g = 0; g < 5; g++)
+            {
+                for (int i = 0; i < totalTiles; i++)
+                {
+                    TileID leftN = tiles[GetNeighbor(i, Direction.Left)].ID;
+                    TileID rightN = tiles[GetNeighbor(i, Direction.Right)].ID;
+                    TileID upN = tiles[GetNeighbor(i, Direction.Up)].ID;
+                    TileID downN = tiles[GetNeighbor(i, Direction.Down)].ID;
+
+                    //check horizontal
+                    if (leftN == TileID.Dirt_Brown && leftN == rightN)
+                    { tiles[i].ID = leftN; }
+
+                    //check vertical
+                    if (upN == TileID.Dirt_Brown && upN == downN)
+                    { tiles[i].ID = upN; }
+                }
             }
         }
 
