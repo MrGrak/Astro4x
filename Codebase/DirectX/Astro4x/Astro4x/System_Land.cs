@@ -320,7 +320,7 @@ namespace Astro4x
             //we should be clearing rows and columns, probably
         }
 
-        public static void GenMap_Rocky()
+        public static void GenMap_Mars()
         {
             Reset();
             //clear any current tileInfo on land
@@ -328,7 +328,7 @@ namespace Astro4x
             ScreenManager.Land.tileInfo.text = "";
             ScreenManager.Land.selectedTile.X = 9999;
 
-            //reset land to dirt
+            //reset land to orange dirt
             for (int i = 0; i < totalTiles; i++)
             {
                 tiles[i].ID = TileID.Dirt_Mars;
@@ -351,7 +351,6 @@ namespace Astro4x
             GenIsland(2660, TileID.Dirt_Brown, 3);
 
 
-
             //fill in lone tiles with Dirt_Brown
             for (int g = 0; g < 5; g++)
             {
@@ -371,9 +370,7 @@ namespace Astro4x
                     { tiles[i].ID = upN; }
                 }
             }
-
-
-
+            
         }
 
         public static void GenMap_Oasis()

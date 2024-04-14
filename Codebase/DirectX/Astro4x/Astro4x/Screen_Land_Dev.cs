@@ -88,7 +88,7 @@ namespace Astro4x
                 if (genWorld_rocky.button.Contains(Input.cursorPos_Screen))
                 {
                     genWorld_rocky.text.color = Color.Red;
-                    if (Input.IsNewLeftClick()) { System_Land.GenMap_Rocky(); }
+                    if (Input.IsNewLeftClick()) { System_Land.GenMap_Mars(); }
                 }
                 else
                 { genWorld_rocky.text.color = Color.White; }

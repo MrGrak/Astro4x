@@ -60,7 +60,7 @@ namespace Astro4x
             
             //load map into land system
             //System_Land.GenMap_Tropical();
-            System_Land.GenMap_Oasis();
+            System_Land.GenMap_Mars();
 
             //place camera center
             Camera2D.targetPosition = new Vector2(632, 368);
