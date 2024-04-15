@@ -5,9 +5,29 @@ Astro 4x TODO:
 
 
 
-we need to have 2 bytes in each tile, to describe the X,Y draw rec
 
-we need to serialize this too
+
+swap zoomed out tiles to be 0 y axis
+zoomed in is 1 on y axis
+
+swap selection tile to use sprite animation on far right
+
+match the background draw to the planet type (which has a base color)
+for the land screen
+
+
+
+
+try zooming out to 0.25 and see what it looks like
+
+if we add a center vignette we can make the map look like
+a planet. then we draw stars over the black background and
+animate them
+
+
+
+
+
 
 
 

@@ -42,7 +42,7 @@ namespace Astro4x
         {
             for(int i = 0; i < totalTiles; i++)
             {
-                tiles[i].ID_X = TileID.Water_Deep;
+                tiles[i].ID = TileID.Water_Deep;
             }
         }
         
@@ -59,7 +59,7 @@ namespace Astro4x
             for (int i = 0; i < totalTiles; i++)
             {
                 //set x, y frame based on id
-                sprite.draw_x = (byte)tiles[i].ID_X;
+                sprite.draw_x = (byte)tiles[i].ID;
                 
                 sprite.draw_y = 0;
                 //swap to simple tiles if camera zoomed out
@@ -117,10 +117,10 @@ namespace Astro4x
             if (arrayIndex >= totalTiles) { return; }
             else if (arrayIndex < 0) { return; }
 
-            tiles[arrayIndex].ID_X = Type;
+            tiles[arrayIndex].ID = Type;
 
             for (int i = 1; i < 9; i++)
-            { tiles[GetNeighbor(arrayIndex, (Direction)i)].ID_X = Type; }
+            { tiles[GetNeighbor(arrayIndex, (Direction)i)].ID = Type; }
         }
 
         public static int GetNeighbor(int arrayIndex, Direction D)
@@ -224,15 +224,15 @@ namespace Astro4x
             for (int i = 0; i < totalTiles; i++)
             {
                 //check horizontal neighbors to see if lone tile
-                TileID leftN = tiles[GetNeighbor(i, Direction.Left)].ID_X;
-                TileID rightN = tiles[GetNeighbor(i, Direction.Right)].ID_X;
+                TileID leftN = tiles[GetNeighbor(i, Direction.Left)].ID;
+                TileID rightN = tiles[GetNeighbor(i, Direction.Right)].ID;
                 //check vertical neighbors
-                TileID upN = tiles[GetNeighbor(i, Direction.Up)].ID_X;
-                TileID downN = tiles[GetNeighbor(i, Direction.Down)].ID_X;
+                TileID upN = tiles[GetNeighbor(i, Direction.Up)].ID;
+                TileID downN = tiles[GetNeighbor(i, Direction.Down)].ID;
 
                 if (leftN == rightN && upN == downN && leftN == upN)
                 {
-                    tiles[i].ID_X = leftN;
+                    tiles[i].ID = leftN;
                 }
             }
         }
@@ -269,43 +269,43 @@ namespace Astro4x
             //create grass within bounds of desert
             for (int i = 0; i < totalTiles; i++)
             {
-                if (tiles[i].ID_X == TileID.Desert)
+                if (tiles[i].ID == TileID.Desert)
                 {
                     bool flipToForest = true;
                     for (int p = 1; p < 9; p++)
                     {
                         int neighborID = GetNeighbor(i, (Direction)p);
-                        if (tiles[neighborID].ID_X == TileID.Water_Deep)
+                        if (tiles[neighborID].ID == TileID.Water_Deep)
                         { flipToForest = false; }
                     }
-                    if (flipToForest) { tiles[i].ID_X = TileID.Grass; }
+                    if (flipToForest) { tiles[i].ID = TileID.Grass; }
                 }
             }
             
             //fill in lone desert tiles
             for (int i = 0; i < totalTiles; i++)
             {
-                TileID leftN = tiles[GetNeighbor(i, Direction.Left)].ID_X;
-                TileID rightN = tiles[GetNeighbor(i, Direction.Right)].ID_X;
-                TileID upN = tiles[GetNeighbor(i, Direction.Up)].ID_X;
-                TileID downN = tiles[GetNeighbor(i, Direction.Down)].ID_X;
+                TileID leftN = tiles[GetNeighbor(i, Direction.Left)].ID;
+                TileID rightN = tiles[GetNeighbor(i, Direction.Right)].ID;
+                TileID upN = tiles[GetNeighbor(i, Direction.Up)].ID;
+                TileID downN = tiles[GetNeighbor(i, Direction.Down)].ID;
                 //check for surrounding desert tiles
                 if (leftN == TileID.Desert && 
                     leftN == rightN && upN == downN && leftN == upN)
-                { tiles[i].ID_X = leftN; }
+                { tiles[i].ID = leftN; }
             }
             
             for (int i = 0; i < totalTiles; i++)
             {
                 //add shallows around land tiles 
-                if (tiles[i].ID_X != TileID.Water_Deep
-                    && tiles[i].ID_X != TileID.Water_Shallow)
+                if (tiles[i].ID != TileID.Water_Deep
+                    && tiles[i].ID != TileID.Water_Shallow)
                 {
                     for (int p = 1; p < 9; p++)
                     {
                         int neighborID = GetNeighbor(i, (Direction)p);
-                        if (tiles[neighborID].ID_X == TileID.Water_Deep)
-                        { tiles[neighborID].ID_X = TileID.Water_Shallow; }
+                        if (tiles[neighborID].ID == TileID.Water_Deep)
+                        { tiles[neighborID].ID = TileID.Water_Shallow; }
                     }
                 }
                 
@@ -331,7 +331,7 @@ namespace Astro4x
             //reset land to orange dirt
             for (int i = 0; i < totalTiles; i++)
             {
-                tiles[i].ID_X = TileID.Dirt_Mars;
+                tiles[i].ID = TileID.Dirt_Mars;
             }
 
             //start with two 'city' locations
@@ -356,18 +356,18 @@ namespace Astro4x
             {
                 for (int i = 0; i < totalTiles; i++)
                 {
-                    TileID leftN = tiles[GetNeighbor(i, Direction.Left)].ID_X;
-                    TileID rightN = tiles[GetNeighbor(i, Direction.Right)].ID_X;
-                    TileID upN = tiles[GetNeighbor(i, Direction.Up)].ID_X;
-                    TileID downN = tiles[GetNeighbor(i, Direction.Down)].ID_X;
+                    TileID leftN = tiles[GetNeighbor(i, Direction.Left)].ID;
+                    TileID rightN = tiles[GetNeighbor(i, Direction.Right)].ID;
+                    TileID upN = tiles[GetNeighbor(i, Direction.Up)].ID;
+                    TileID downN = tiles[GetNeighbor(i, Direction.Down)].ID;
 
                     //check horizontal
                     if (leftN == TileID.Dirt_Brown && leftN == rightN)
-                    { tiles[i].ID_X = leftN; }
+                    { tiles[i].ID = leftN; }
 
                     //check vertical
                     if (upN == TileID.Dirt_Brown && upN == downN)
-                    { tiles[i].ID_X = upN; }
+                    { tiles[i].ID = upN; }
                 }
             }
             
@@ -384,7 +384,7 @@ namespace Astro4x
             //reset land to desert
             for (int i = 0; i < totalTiles; i++)
             {
-                tiles[i].ID_X = TileID.Desert;
+                tiles[i].ID = TileID.Desert;
             }
             
             //create water in central area
@@ -397,31 +397,31 @@ namespace Astro4x
             {
                 for (int i = 0; i < totalTiles; i++)
                 {
-                    TileID leftN = tiles[GetNeighbor(i, Direction.Left)].ID_X;
-                    TileID rightN = tiles[GetNeighbor(i, Direction.Right)].ID_X;
-                    TileID upN = tiles[GetNeighbor(i, Direction.Up)].ID_X;
-                    TileID downN = tiles[GetNeighbor(i, Direction.Down)].ID_X;
+                    TileID leftN = tiles[GetNeighbor(i, Direction.Left)].ID;
+                    TileID rightN = tiles[GetNeighbor(i, Direction.Right)].ID;
+                    TileID upN = tiles[GetNeighbor(i, Direction.Up)].ID;
+                    TileID downN = tiles[GetNeighbor(i, Direction.Down)].ID;
                     
                     //check horizontal
                     if(leftN == TileID.Water_Deep && leftN == rightN)
-                    { tiles[i].ID_X = leftN; }
+                    { tiles[i].ID = leftN; }
 
                     //check vertical
                     if (upN == TileID.Water_Deep && upN == downN)
-                    { tiles[i].ID_X = upN; }
+                    { tiles[i].ID = upN; }
                 }
             }
 
             //add shallows on deep water if desert tile is neighbor
             for (int i = 0; i < totalTiles; i++)
             {
-                if (tiles[i].ID_X == TileID.Water_Deep)
+                if (tiles[i].ID == TileID.Water_Deep)
                 {
                     for (int p = 1; p < 9; p++)
                     {
                         int neighborID = GetNeighbor(i, (Direction)p);
-                        if (tiles[neighborID].ID_X == TileID.Desert)
-                        { tiles[i].ID_X = TileID.Water_Shallow; }
+                        if (tiles[neighborID].ID == TileID.Desert)
+                        { tiles[i].ID = TileID.Water_Shallow; }
                     }
                 }
             }
@@ -429,13 +429,13 @@ namespace Astro4x
             //add grass around the desert tiles near deep water
             for (int i = 0; i < totalTiles; i++)
             {
-                if (tiles[i].ID_X == TileID.Desert)
+                if (tiles[i].ID == TileID.Desert)
                 {
                     for (int p = 1; p < 9; p++)
                     {
                         int neighborID = GetNeighbor(i, (Direction)p);
-                        if (tiles[neighborID].ID_X == TileID.Water_Shallow)
-                        { tiles[i].ID_X = TileID.Grass; }
+                        if (tiles[neighborID].ID == TileID.Water_Shallow)
+                        { tiles[i].ID = TileID.Grass; }
                     }
                 }
             }
@@ -444,19 +444,19 @@ namespace Astro4x
             List<int> grassTiles = new List<int>(500);
             for (int i = 0; i < totalTiles; i++)
             {
-                if (tiles[i].ID_X == TileID.Grass)
+                if (tiles[i].ID == TileID.Grass)
                 { grassTiles.Add(i); }
             }
             //loop list of grass tiles, swap desert neighbors to grass
             for (int i = 0; i < grassTiles.Count; i++)
             {
-                if (tiles[grassTiles[i]].ID_X == TileID.Grass)
+                if (tiles[grassTiles[i]].ID == TileID.Grass)
                 {
                     for (int p = 1; p < 9; p++)
                     {
                         int neighborID = GetNeighbor(grassTiles[i], (Direction)p);
-                        if (tiles[neighborID].ID_X == TileID.Desert)
-                        { tiles[neighborID].ID_X = TileID.Grass; }
+                        if (tiles[neighborID].ID == TileID.Desert)
+                        { tiles[neighborID].ID = TileID.Grass; }
                     }
                 }
             }
@@ -478,7 +478,7 @@ namespace Astro4x
             //reset land to snow/ice
             for (int i = 0; i < totalTiles; i++)
             {
-                tiles[i].ID_X = TileID.Snow;
+                tiles[i].ID = TileID.Snow;
             }
 
             //start with two 'city' locations
@@ -505,18 +505,18 @@ namespace Astro4x
             {
                 for (int i = 0; i < totalTiles; i++)
                 {
-                    TileID leftN = tiles[GetNeighbor(i, Direction.Left)].ID_X;
-                    TileID rightN = tiles[GetNeighbor(i, Direction.Right)].ID_X;
-                    TileID upN = tiles[GetNeighbor(i, Direction.Up)].ID_X;
-                    TileID downN = tiles[GetNeighbor(i, Direction.Down)].ID_X;
+                    TileID leftN = tiles[GetNeighbor(i, Direction.Left)].ID;
+                    TileID rightN = tiles[GetNeighbor(i, Direction.Right)].ID;
+                    TileID upN = tiles[GetNeighbor(i, Direction.Up)].ID;
+                    TileID downN = tiles[GetNeighbor(i, Direction.Down)].ID;
 
                     //check horizontal
                     if (leftN == TileID.Dirt_Brown && leftN == rightN)
-                    { tiles[i].ID_X = leftN; }
+                    { tiles[i].ID = leftN; }
 
                     //check vertical
                     if (upN == TileID.Dirt_Brown && upN == downN)
-                    { tiles[i].ID_X = upN; }
+                    { tiles[i].ID = upN; }
                 }
             }
         }
@@ -532,7 +532,7 @@ namespace Astro4x
             //reset land to dirt
             for (int i = 0; i < totalTiles; i++)
             {
-                tiles[i].ID_X = TileID.Dirt_Gray;
+                tiles[i].ID = TileID.Dirt_Gray;
             }
 
             //start with two 'city' locations
@@ -559,18 +559,18 @@ namespace Astro4x
             {
                 for (int i = 0; i < totalTiles; i++)
                 {
-                    TileID leftN = tiles[GetNeighbor(i, Direction.Left)].ID_X;
-                    TileID rightN = tiles[GetNeighbor(i, Direction.Right)].ID_X;
-                    TileID upN = tiles[GetNeighbor(i, Direction.Up)].ID_X;
-                    TileID downN = tiles[GetNeighbor(i, Direction.Down)].ID_X;
+                    TileID leftN = tiles[GetNeighbor(i, Direction.Left)].ID;
+                    TileID rightN = tiles[GetNeighbor(i, Direction.Right)].ID;
+                    TileID upN = tiles[GetNeighbor(i, Direction.Up)].ID;
+                    TileID downN = tiles[GetNeighbor(i, Direction.Down)].ID;
 
                     //check horizontal
                     if (leftN == TileID.Dirt_Brown && leftN == rightN)
-                    { tiles[i].ID_X = leftN; }
+                    { tiles[i].ID = leftN; }
 
                     //check vertical
                     if (upN == TileID.Dirt_Brown && upN == downN)
-                    { tiles[i].ID_X = upN; }
+                    { tiles[i].ID = upN; }
                 }
             }
         }
@@ -606,7 +606,7 @@ namespace Astro4x
 
                     //write all tile ids to byte array
                     for (int i = 0; i < totalTiles; i++)
-                    { writer.Write((byte)tiles[i].ID_X); }
+                    { writer.Write((byte)tiles[i].ID); }
                     
                     planetData = stream.ToArray();
                 }

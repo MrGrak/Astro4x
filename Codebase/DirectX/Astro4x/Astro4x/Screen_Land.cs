@@ -34,8 +34,8 @@ namespace Astro4x
             highliteTile = new SpriteStruct();
             highliteTile.draw_width = 16;
             highliteTile.draw_height = 16;
-            highliteTile.draw_x = (byte)(0 * highliteTile.draw_width);
-            highliteTile.draw_y = (byte)(2 * highliteTile.draw_height);
+            highliteTile.draw_x = (byte)(15 * highliteTile.draw_width);
+            highliteTile.draw_y = (byte)(0 * highliteTile.draw_height);
             highliteTile.alpha = 1.0f;
             highliteTile.layer = Layers.Land_UI;
 
@@ -243,7 +243,7 @@ namespace Astro4x
                                     //Camera2D.targetPosition.Y = selectedTile.Y + 8;
 
                                     //update tile info text
-                                    tileInfo.text = "ID: " + i + "." + System_Land.tiles[i].ID_X.ToString().ToUpper();
+                                    tileInfo.text = "ID: " + i + "." + System_Land.tiles[i].ID.ToString().ToUpper();
                                     tileInfo.text += "\nROW: " + yCounter;
 
                                     tileInfo.position.X = tilePos.X - 8;
@@ -275,7 +275,7 @@ namespace Astro4x
                                     //System_Land.Fill3x3(i, TileID.Grass);
 
                                     //fill selected
-                                    System_Land.tiles[i].ID_X = TileID.Grass;
+                                    System_Land.tiles[i].ID = TileID.Grass;
                                 }
 
 
@@ -360,7 +360,7 @@ namespace Astro4x
 
 
 
-            #region Aanimate highlight tile
+            #region Animate highlight tile
             
             highliteTimer++;
             if(highliteTimer > 10)
@@ -370,8 +370,8 @@ namespace Astro4x
                 highliteAnimIndex++;
                 if(highliteAnimIndex > 2)
                 { highliteAnimIndex = 0; }
-                //set x frame (animate)
-                highliteTile.draw_x = (byte)(highliteAnimIndex * highliteTile.draw_width);
+                //set frame
+                highliteTile.draw_y = (byte)(highliteAnimIndex * highliteTile.draw_height);
             }
             
             #endregion
@@ -390,22 +390,16 @@ namespace Astro4x
 
             //draw deep sea color as background
             ScreenManager.GDM.GraphicsDevice.Clear(new Color(36,60,90));
-
+            
             System_Land.Draw();
-
-
-
-
+            
             if(ScreenManager.activeScreen == this)
             {
                 //dont draw selected when zoomed out
                 if (Camera2D.targetZoom >= 1.0f)
                 {
                     ScreenManager.Draw(selectedTile, Assets.sheet_Land);
-
                     
-
-
                     Vector2 textSize = Assets.Assets_font_eng.MeasureString(tileInfo.text);
 
                     ScreenManager.Draw(new Rectangle(
@@ -421,9 +415,7 @@ namespace Astro4x
                     ScreenManager.Draw(highliteTile, Assets.sheet_Land);
                 }
             }
-
             
-
             ScreenManager.SB.End();
         }
 
