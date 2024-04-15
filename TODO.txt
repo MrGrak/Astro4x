@@ -4,12 +4,12 @@ Astro 4x TODO:
 
 
 
-create load planet button, with file dialog. done.
+
 
 
 
 we need to store planet type with planet data, otherwise we dont
-know what color to draw the background.
+know what color to draw the background. done.
 
 
 
