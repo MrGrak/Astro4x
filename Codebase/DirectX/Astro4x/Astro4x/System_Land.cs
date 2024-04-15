@@ -636,6 +636,9 @@ namespace Astro4x
                     writer.Write((byte)'.'); writer.Write((byte)'1');
                     writer.Write((byte)'-');
 
+                    //write planet type
+                    writer.Write((byte)planetType);
+
                     //write all tile ids to byte array
                     for (int i = 0; i < totalTiles; i++)
                     { writer.Write((byte)tiles[i].ID); }
@@ -671,18 +674,29 @@ namespace Astro4x
 
         public static void LoadThePlanet(byte[] planetData)
         {
-            using (MemoryStream stream = new MemoryStream(planetData))
+            try
             {
-                using (BinaryReader reader = new BinaryReader(stream))
+                //this may fail on older planet file formats
+                using (MemoryStream stream = new MemoryStream(planetData))
                 {
-                    //read ascii header
-                    for(int i = 0; i < 25; i++)
-                    { reader.ReadByte(); }
+                    using (BinaryReader reader = new BinaryReader(stream))
+                    {
+                        //read ascii header
+                        for (int i = 0; i < 25; i++)
+                        { reader.ReadByte(); }
 
-                    //read tile data
-                    for (int i = 0; i < totalTiles; i++)
-                    { tiles[i].ID = (TileID)reader.ReadByte(); }
+                        //read planet type
+                        planetType = (PlanetType)reader.ReadByte();
+
+                        //read tile data
+                        for (int i = 0; i < totalTiles; i++)
+                        { tiles[i].ID = (TileID)reader.ReadByte(); }
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                //e.ToString()
             }
         }
 

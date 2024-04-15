@@ -134,7 +134,10 @@ namespace Astro4x
                 if (savePlanet.button.Contains(Input.cursorPos_Screen))
                 {
                     savePlanet.text.color = Color.Red;
-                    if (Input.IsNewLeftClick()) { System_Land.SaveThePlanet("TEST"); }
+                    if (Input.IsNewLeftClick())
+                    {
+                        System_Land.SaveThePlanet("DEV-" + DateTime.UtcNow.Ticks);
+                    }
                 }
                 else
                 { savePlanet.text.color = Color.White; }
