@@ -23,7 +23,7 @@ namespace Astro4x
         UI_Button genWorld_artic;
         UI_Button genWorld_moon;
 
-        UI_Button saveWorld;
+        UI_Button savePlanet;
 
 
         public Screen_Land_Dev()
@@ -48,8 +48,8 @@ namespace Astro4x
             genWorld_moon = new UI_Button(new Vector2(0, 0), "GEN MOON", windowWidth - 20);
             genWorld_moon.text.color = Color.White;
 
-            saveWorld = new UI_Button(new Vector2(0, 0), "SAVE WORLD", windowWidth - 20);
-            saveWorld.text.color = Color.White;
+            savePlanet = new UI_Button(new Vector2(0, 0), "SAVE PLANET", windowWidth - 20);
+            savePlanet.text.color = Color.White;
         }
 
         public override void Open()
@@ -122,13 +122,13 @@ namespace Astro4x
 
 
                 //save world
-                if (saveWorld.button.Contains(Input.cursorPos_Screen))
+                if (savePlanet.button.Contains(Input.cursorPos_Screen))
                 {
-                    saveWorld.text.color = Color.Red;
+                    savePlanet.text.color = Color.Red;
                     if (Input.IsNewLeftClick()) { System_Land.SaveThePlanet("TEST"); }
                 }
                 else
-                { saveWorld.text.color = Color.White; }
+                { savePlanet.text.color = Color.White; }
 
                 #endregion
 
@@ -209,10 +209,10 @@ namespace Astro4x
 
 
             //parent ui children to gen world
-            saveWorld.button.X = genWorld_moon.button.X;
-            saveWorld.button.Y = genWorld_moon.button.Y + 12;
-            saveWorld.text.position.X = saveWorld.button.X + 5;
-            saveWorld.text.position.Y = saveWorld.button.Y + 0;
+            savePlanet.button.X = genWorld_moon.button.X;
+            savePlanet.button.Y = genWorld_moon.button.Y + 12;
+            savePlanet.text.position.X = savePlanet.button.X + 5;
+            savePlanet.text.position.Y = savePlanet.button.Y + 0;
 
 
 
@@ -236,7 +236,7 @@ namespace Astro4x
             genWorld_artic.Draw();
             genWorld_moon.Draw();
 
-            saveWorld.Draw();
+            savePlanet.Draw();
 
             ScreenManager.SB.End();
         }

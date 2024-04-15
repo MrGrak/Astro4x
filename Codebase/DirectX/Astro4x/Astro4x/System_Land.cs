@@ -13,6 +13,11 @@ namespace Astro4x
     public enum Direction : Byte
     { None, Up, UpRight, Right, DownRight, Down, DownLeft, Left, UpLeft }
 
+    public enum PlanetType : Byte
+    { Tropical, Rocky, Oasis, Artic, Moon }
+
+
+
     public static class System_Land
     {
         public static int tilesPerRow = 80; 
@@ -23,6 +28,9 @@ namespace Astro4x
         
         public static int x = 0;
         public static int y = 0;
+
+        public static PlanetType planetType = PlanetType.Tropical;
+
 
 
         public static void Constructor()
@@ -53,6 +61,19 @@ namespace Astro4x
 
         public static void Draw()
         {
+            //draw background color based on planet type to hide map tile edges
+            if (planetType == PlanetType.Tropical)
+            { ScreenManager.GDM.GraphicsDevice.Clear(Assets.Color_DeepSea_Blue); }
+            else if (planetType == PlanetType.Rocky)
+            { ScreenManager.GDM.GraphicsDevice.Clear(Assets.Color_Mars_Orange); }
+            else if (planetType == PlanetType.Oasis)
+            { ScreenManager.GDM.GraphicsDevice.Clear(Assets.Color_Desert_Yellow); }
+            else if (planetType == PlanetType.Artic)
+            { ScreenManager.GDM.GraphicsDevice.Clear(Assets.Color_Artic_Blue); }
+            else if (planetType == PlanetType.Moon)
+            { ScreenManager.GDM.GraphicsDevice.Clear(Assets.Color_Moon_Gray); }
+            
+
             int tileCounter = 0;
             int yCounter = 1;
 
@@ -107,8 +128,6 @@ namespace Astro4x
                     sprite.layer);
             }
         }
-
-
 
         //utility methods
 
@@ -248,7 +267,8 @@ namespace Astro4x
             ScreenManager.Land.tileInfo.text = "";
             ScreenManager.Land.selectedTile.X = 9999;
 
-
+            //store planet type
+            planetType = PlanetType.Tropical;
 
             //start with two 'city' locations that we will bridge together
             int cityA = 1228;
@@ -328,6 +348,9 @@ namespace Astro4x
             ScreenManager.Land.tileInfo.text = "";
             ScreenManager.Land.selectedTile.X = 9999;
 
+            //store planet type
+            planetType = PlanetType.Rocky;
+
             //reset land to orange dirt
             for (int i = 0; i < totalTiles; i++)
             {
@@ -380,6 +403,9 @@ namespace Astro4x
             ScreenManager.Land.tileInfo.position.X = 9999;
             ScreenManager.Land.tileInfo.text = "";
             ScreenManager.Land.selectedTile.X = 9999;
+
+            //store planet type
+            planetType = PlanetType.Oasis;
 
             //reset land to desert
             for (int i = 0; i < totalTiles; i++)
@@ -475,6 +501,9 @@ namespace Astro4x
             ScreenManager.Land.tileInfo.text = "";
             ScreenManager.Land.selectedTile.X = 9999;
 
+            //store planet type
+            planetType = PlanetType.Artic;
+
             //reset land to snow/ice
             for (int i = 0; i < totalTiles; i++)
             {
@@ -528,6 +557,9 @@ namespace Astro4x
             ScreenManager.Land.tileInfo.position.X = 9999;
             ScreenManager.Land.tileInfo.text = "";
             ScreenManager.Land.selectedTile.X = 9999;
+
+            //store planet type
+            planetType = PlanetType.Moon;
 
             //reset land to dirt
             for (int i = 0; i < totalTiles; i++)

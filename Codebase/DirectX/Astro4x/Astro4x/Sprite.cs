@@ -8,16 +8,18 @@ using System.Threading.Tasks;
 
 namespace Astro4x
 {
-    public struct SpriteStruct //est. 20 bytes
+    public struct SpriteStruct //est. 24 bytes
     {
         public int X, Y; //8 bytes
         public float layer, alpha; //8 bytes
 
         //4 bytes
-        public byte draw_width;
-        public byte draw_height;
-        public byte draw_x;
-        public byte draw_y;
+        public short draw_width;
+        public short draw_height;
+
+        //4 bytes
+        public short draw_x;
+        public short draw_y;
         
     }
 }

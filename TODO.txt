@@ -7,27 +7,27 @@ Astro 4x TODO:
 
 
 
-swap zoomed out tiles to be 0 y axis
-zoomed in is 1 on y axis. done.
 
-try zooming out to 0.25 and see what it looks like
-done, it looks great.
 
 
 
 
 
 match the background draw to the planet type (which has a base color)
-for the land screen
-
-
-
-
-
+for the land screen. done, looks great.
 
 if we add a center vignette we can make the map look like
 a planet. then we draw stars over the black background and
-animate them
+animate them. done, looks great.
+
+
+
+create load planet button, with file dialog
+
+
+
+
+
 
 
 

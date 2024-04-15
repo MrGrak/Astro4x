@@ -26,6 +26,9 @@ namespace Astro4x
         //zoom state: 0=2.0, 1=1.0, 2=0.5, 3=0.25
         public byte zoomState = 1;
 
+        public SpriteStruct planetCutout;
+
+
 
 
         public Screen_Land()
@@ -51,6 +54,16 @@ namespace Astro4x
 
             tileInfo = new Text("init", new Vector2(999, 999), Color.White);
             tileInfo.layer = Layers.Debug_Text;
+
+            //setup mostly black large sprite to cover bkg
+            planetCutout = new SpriteStruct();
+            planetCutout.draw_width = 640;
+            planetCutout.draw_height = 360;
+            planetCutout.draw_x = (short)(0 * planetCutout.draw_width);
+            planetCutout.draw_y = (short)(1 * planetCutout.draw_height);
+            planetCutout.alpha = 0.0f;
+            planetCutout.layer = Layers.Planet_Cutout;
+            planetCutout.X = 0; planetCutout.Y = 0;
         }
 
         public override void Open()
@@ -425,16 +438,14 @@ namespace Astro4x
                 BlendState.AlphaBlend,
                 SamplerState.PointClamp,
                 null, null, null, Camera2D.view);
-
-            //draw deep sea color as background
-            ScreenManager.GDM.GraphicsDevice.Clear(new Color(36,60,90));
             
             System_Land.Draw();
             
+            //draw selected tile and highlight sprite
             if(ScreenManager.activeScreen == this)
             {
                 //dont draw selected when zoomed out
-                if (Camera2D.targetZoom >= 1.0f)
+                if (Camera2D.currentZoom >= 1.0f)
                 {
                     ScreenManager.Draw(selectedTile, Assets.sheet_Land);
                     
@@ -448,13 +459,44 @@ namespace Astro4x
                     ScreenManager.Draw(tileInfo);
                 }
                 //draw highlight tile only at interactive pov
-                if (Camera2D.targetZoom == 1.0f)
+                if (Camera2D.currentZoom == 1.0f)
                 {
                     ScreenManager.Draw(highliteTile, Assets.sheet_Land);
                 }
             }
             
             ScreenManager.SB.End();
+
+
+
+
+
+            //draw any screen space sprites
+            ScreenManager.SB.Begin(SpriteSortMode.BackToFront,
+                BlendState.AlphaBlend,
+                SamplerState.PointClamp,
+                null, null, null, null);
+
+            //draw planet sprite
+            if (Camera2D.targetZoom < 0.5f)
+            {
+                planetCutout.alpha += 0.1f;
+                if (planetCutout.alpha > 1.0f)
+                { planetCutout.alpha = 1.0f; }
+            }
+            else
+            {
+                planetCutout.alpha -= 0.1f;
+                if (planetCutout.alpha < 0.0f)
+                { planetCutout.alpha = 0.0f; }
+            }
+
+            ScreenManager.Draw(planetCutout, Assets.sheet_Main);
+
+            ScreenManager.SB.End();
+
+
+
         }
 
         //

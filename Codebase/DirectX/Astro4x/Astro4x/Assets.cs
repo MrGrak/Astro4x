@@ -17,6 +17,12 @@ namespace Astro4x
         public static Texture2D sheet_Main;
         public static Texture2D sheet_Land;
 
+        public static Color Color_DeepSea_Blue = new Color(36, 60, 90);
+        public static Color Color_Mars_Orange = new Color(192, 137, 18);
+        public static Color Color_Desert_Yellow = new Color(207, 203, 103);
+        public static Color Color_Artic_Blue = new Color(162, 205, 206);
+        public static Color Color_Moon_Gray = new Color(49, 49, 49);
+
         public static void Constructor()
         {
             lineTexture = new Texture2D(ScreenManager.GDM.GraphicsDevice, 1, 1);
