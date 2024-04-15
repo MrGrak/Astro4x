@@ -8,6 +8,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using System.IO;
+using System.Security;
+using System.Windows.Forms;
+
 namespace Astro4x
 {
     public class Screen_Land_Dev : Screen
@@ -24,7 +28,7 @@ namespace Astro4x
         UI_Button genWorld_moon;
 
         UI_Button savePlanet;
-
+        UI_Button loadPlanet;
 
         public Screen_Land_Dev()
         {
@@ -50,6 +54,11 @@ namespace Astro4x
 
             savePlanet = new UI_Button(new Vector2(0, 0), "SAVE PLANET", windowWidth - 20);
             savePlanet.text.color = Color.White;
+
+            loadPlanet = new UI_Button(new Vector2(0, 0), "LOAD PLANET", windowWidth - 20);
+            loadPlanet.text.color = Color.White;
+
+
         }
 
         public override void Open()
@@ -69,7 +78,7 @@ namespace Astro4x
         {
             if (displayState == DisplayState.OPENED)
             {
-                if (Input.IsNewKeyPress(Keys.Space))
+                if (Input.IsNewKeyPress(Microsoft.Xna.Framework.Input.Keys.Space))
                 { Close(); }
 
 
@@ -129,6 +138,64 @@ namespace Astro4x
                 }
                 else
                 { savePlanet.text.color = Color.White; }
+
+                //load world
+                if (loadPlanet.button.Contains(Input.cursorPos_Screen))
+                {
+                    loadPlanet.text.color = Color.Red;
+                    if (Input.IsNewLeftClick())
+                    {
+                        //open file dialog on windows, allow reading of .astro planet file
+                        byte[] fileContent;
+                        var filePath = string.Empty;
+
+                        using (OpenFileDialog openFileDialog = new OpenFileDialog())
+                        {
+                            openFileDialog.InitialDirectory = Path.Combine(
+                                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Astro4X");
+
+                            openFileDialog.Filter = "astro files (*.astro)|*.txt|All files (*.*)|*.*";
+                            openFileDialog.FilterIndex = 2;
+                            openFileDialog.RestoreDirectory = true;
+
+                            if (openFileDialog.ShowDialog() == DialogResult.OK)
+                            {
+                                //Get the path of specified file
+                                filePath = openFileDialog.FileName;
+
+                                //Read the contents of the file into a stream
+                                var fileStream = openFileDialog.OpenFile();
+
+                                using (BinaryReader reader = new BinaryReader(fileStream))
+                                { fileContent = reader.ReadBytes((int)fileStream.Length); }
+
+                                System_Land.LoadThePlanet(fileContent);
+                            }
+                        }
+                        
+                    }
+                }
+                else
+                { loadPlanet.text.color = Color.White; }
+
+
+
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                 #endregion
 
@@ -209,16 +276,19 @@ namespace Astro4x
 
 
             //parent ui children to gen world
-            savePlanet.button.X = genWorld_moon.button.X;
-            savePlanet.button.Y = genWorld_moon.button.Y + 12;
+            savePlanet.button.X = bkgWindow.X + 10;
+            savePlanet.button.Y = bkgWindow.Y + 330;
             savePlanet.text.position.X = savePlanet.button.X + 5;
             savePlanet.text.position.Y = savePlanet.button.Y + 0;
 
-
+            loadPlanet.button.X = savePlanet.button.X;
+            loadPlanet.button.Y = savePlanet.button.Y + 12;
+            loadPlanet.text.position.X = loadPlanet.button.X + 5;
+            loadPlanet.text.position.Y = loadPlanet.button.Y + 0;
 
 
             #endregion
-            
+
         }
 
         public override void Draw()
@@ -237,6 +307,7 @@ namespace Astro4x
             genWorld_moon.Draw();
 
             savePlanet.Draw();
+            loadPlanet.Draw();
 
             ScreenManager.SB.End();
         }

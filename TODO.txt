@@ -4,31 +4,12 @@ Astro 4x TODO:
 
 
 
+create load planet button, with file dialog. done.
 
 
 
-
-
-
-
-
-
-match the background draw to the planet type (which has a base color)
-for the land screen. done, looks great.
-
-if we add a center vignette we can make the map look like
-a planet. then we draw stars over the black background and
-animate them. done, looks great.
-
-
-
-create load planet button, with file dialog
-
-
-
-
-
-
+we need to store planet type with planet data, otherwise we dont
+know what color to draw the background.
 
 
 

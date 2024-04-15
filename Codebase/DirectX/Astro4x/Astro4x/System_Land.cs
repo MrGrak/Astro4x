@@ -669,7 +669,22 @@ namespace Astro4x
             }
         }
 
+        public static void LoadThePlanet(byte[] planetData)
+        {
+            using (MemoryStream stream = new MemoryStream(planetData))
+            {
+                using (BinaryReader reader = new BinaryReader(stream))
+                {
+                    //read ascii header
+                    for(int i = 0; i < 25; i++)
+                    { reader.ReadByte(); }
 
+                    //read tile data
+                    for (int i = 0; i < totalTiles; i++)
+                    { tiles[i].ID = (TileID)reader.ReadByte(); }
+                }
+            }
+        }
 
 
 
