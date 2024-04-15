@@ -21,8 +21,10 @@ namespace Astro4x
         public byte highliteTimer = 0;
         public byte highliteAnimIndex = 0;
 
-
         public Text tileInfo;
+
+        //zoom state: 0=2.0, 1=1.0, 2=0.5, 3=0.25
+        public byte zoomState = 1;
 
 
 
@@ -99,37 +101,66 @@ namespace Astro4x
 
 
 
-                #region Zoom in/out
+                #region Zoom in/out, using zoomState
 
                 if (Input.IsScrollWheelMoving())
                 {
                     if (Input.scrollDirection == 1) //zoom in
                     {
-                        if (Camera2D.targetZoom < 1.0f)
-                        { Camera2D.targetZoom = 1.0f; }
-                        else
+                        if(zoomState == 0)
                         {
-                            Camera2D.targetZoom += 1.00f;
-                            if (Camera2D.targetZoom > 2.0f)
-                            { Camera2D.targetZoom = 2.0f; }
+                            //nothing, can't zoom in more
+                        }
+                        else if (zoomState == 1)
+                        {
+                            zoomState = 0; //zoom in
+                            Camera2D.targetZoom = 2.0f;
+                        }
+                        else if (zoomState == 2)
+                        {
+                            zoomState = 1; //zoom in
+                            Camera2D.targetZoom = 1.0f;
+                        }
+                        else if (zoomState == 3)
+                        {
+                            zoomState = 2; //zoom in
+                            Camera2D.targetZoom = 0.5f;
                         }
                     }
                     else if (Input.scrollDirection == 2) //zoom out
                     {
-                        if (Camera2D.targetZoom > 1.0f)
+                        if (zoomState == 0)
                         {
+                            zoomState = 1; //zoom out
                             Camera2D.targetZoom = 1.0f;
                         }
-                        else
+                        else if (zoomState == 1)
                         {
-                            Camera2D.targetZoom -= 0.5f;
-                            if (Camera2D.targetZoom < 0.5f)
-                            { Camera2D.targetZoom = 0.5f; }
+                            zoomState = 2; //zoom out
+                            Camera2D.targetZoom = 0.5f;
+                        }
+                        else if (zoomState == 2)
+                        {
+                            zoomState = 3; //zoom out
+                            Camera2D.targetZoom = 0.25f;
+                        }
+                        else if (zoomState == 3)
+                        {
+                            //nothing, can't zoom out more
                         }
                     }
                 }
 
                 #endregion
+
+
+
+
+
+
+
+
+
 
                 //based on zoom amount, display camera differently
                 if (Camera2D.targetZoom == 1.0f)
@@ -329,7 +360,14 @@ namespace Astro4x
                     //zoomed out, lock camera to one position
                     Camera2D.targetPosition.X = 632;
                     Camera2D.targetPosition.Y = 368;
+                    //this is for 0.5 and 0.25 zooms
                 }
+
+
+
+
+
+
             }
         }
 

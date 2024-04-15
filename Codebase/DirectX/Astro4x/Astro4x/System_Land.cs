@@ -61,10 +61,10 @@ namespace Astro4x
                 //set x, y frame based on id
                 sprite.draw_x = (byte)tiles[i].ID;
                 
-                sprite.draw_y = 0;
+                sprite.draw_y = 1;
                 //swap to simple tiles if camera zoomed out
                 if (Camera2D.targetZoom < 1.0f)
-                { sprite.draw_y = 1; }
+                { sprite.draw_y = 0; }
 
 
                 //wrap array to map
