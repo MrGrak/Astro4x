@@ -51,10 +51,11 @@
     <Compile Include="ScreenManager.cs" />
     <Compile Include="Screen_Land.cs" />
     <Compile Include="Screen_Land_Dev.cs" />
+    <Compile Include="Screen_Universe.cs" />
     <Compile Include="Sprite.cs" />
     <Compile Include="System_Land.cs" />
+    <Compile Include="System_Universe.cs" />
     <Compile Include="Text.cs" />
-    <Compile Include="Tile.cs" />
     <Compile Include="UI_Button.cs" />
   </ItemGroup>
   <ItemGroup>

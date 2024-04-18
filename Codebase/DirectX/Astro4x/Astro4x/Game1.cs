@@ -42,7 +42,8 @@ namespace Astro4x
             //assets then systems, then boot
             Assets.Constructor();
             System_Land.Constructor();
-            
+            System_Universe.Constructor();
+
             ScreenManager.Constructor(); //sets boot screen
         }
         

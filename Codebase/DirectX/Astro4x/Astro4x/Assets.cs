@@ -16,6 +16,7 @@ namespace Astro4x
         public static SpriteFont Assets_font_eng;
         public static Texture2D sheet_Main;
         public static Texture2D sheet_Land;
+        public static Texture2D sheet_Universe;
 
         public static Color Color_DeepSea_Blue = new Color(36, 60, 90);
         public static Color Color_Mars_Orange = new Color(192, 137, 18);
@@ -31,6 +32,7 @@ namespace Astro4x
             Assets_font_eng = ScreenManager.CM.Load<SpriteFont>("font_ui_eng");
             sheet_Main = ScreenManager.CM.Load<Texture2D>(@"sheet_Main");
             sheet_Land = ScreenManager.CM.Load<Texture2D>(@"sheet_Land");
+            sheet_Universe = ScreenManager.CM.Load<Texture2D>(@"sheet_Universe");
         }
     }
 }

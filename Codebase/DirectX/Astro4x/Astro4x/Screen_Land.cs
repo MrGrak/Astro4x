@@ -30,7 +30,6 @@ namespace Astro4x
 
 
 
-
         public Screen_Land()
         {
             Name = "LAND";
@@ -91,28 +90,20 @@ namespace Astro4x
         public override void Close()
         {
             displayState = DisplayState.CLOSING;
-
         }
 
         public override void HandleInput()
         {
             if(displayState == DisplayState.OPENED)
             {
-
-                //generate a new world map via space
+                
                 if(Input.IsNewKeyPress(Keys.Space))
                 {
-                    //System_Land.GenMap();
-
                     //open the land devn menu
                     if (Camera2D.targetZoom <= 1.0f && ScreenManager.activeScreen == this)
-                    {
-                        ScreenManager.AddScreen(ScreenManager.LandMenu);
-                    }
+                    { ScreenManager.AddScreen(ScreenManager.LandMenu); }
                 }
-
-
-
+                
 
                 #region Zoom in/out, using zoomState
 
@@ -166,15 +157,7 @@ namespace Astro4x
 
                 #endregion
 
-
-
-
-
-
-
-
-
-
+                
                 //based on zoom amount, display camera differently
                 if (Camera2D.targetZoom == 1.0f)
                 {
@@ -319,7 +302,7 @@ namespace Astro4x
                                     //System_Land.Fill3x3(i, TileID.Grass);
 
                                     //fill selected
-                                    System_Land.tiles[i].ID = TileID.Grass;
+                                    System_Land.tiles[i].ID = Tile_LID.Grass;
                                 }
 
 
@@ -375,12 +358,6 @@ namespace Astro4x
                     Camera2D.targetPosition.Y = 368;
                     //this is for 0.5 and 0.25 zooms
                 }
-
-
-
-
-
-
             }
         }
 
@@ -409,8 +386,6 @@ namespace Astro4x
 
             #endregion
 
-
-
             #region Animate highlight tile
             
             highliteTimer++;
@@ -426,8 +401,6 @@ namespace Astro4x
             }
             
             #endregion
-
-
 
             Camera2D.Update();
         }
@@ -467,10 +440,7 @@ namespace Astro4x
             
             ScreenManager.SB.End();
 
-
-
-
-
+            
             //draw any screen space sprites
             ScreenManager.SB.Begin(SpriteSortMode.BackToFront,
                 BlendState.AlphaBlend,
@@ -494,13 +464,9 @@ namespace Astro4x
             ScreenManager.Draw(planetCutout, Assets.sheet_Main);
 
             ScreenManager.SB.End();
-
-
-
         }
 
         //
-
 
     }
 }

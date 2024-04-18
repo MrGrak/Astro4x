@@ -12,6 +12,9 @@ namespace Astro4x
 {
     public enum DisplayState { OPENING, OPENED, CLOSING, CLOSED }
 
+    public enum Direction : Byte
+    { None, Up, UpRight, Right, DownRight, Down, DownLeft, Left, UpLeft }
+
     public abstract class Screen
     {
         public String Name = "Base Screen";
@@ -54,6 +57,7 @@ namespace Astro4x
         //screen references
         public static Screen_Land Land;
         public static Screen_Land_Dev LandMenu;
+        public static Screen_Universe Universe;
         //...
 
 
@@ -65,12 +69,11 @@ namespace Astro4x
             //construct all screen instances
             Land = new Screen_Land();
             LandMenu = new Screen_Land_Dev();
-
-
+            Universe = new Screen_Universe();
 
 
             //boot to this screen first
-            AddScreen(Land);
+            AddScreen(Universe);
         }
 
         public static void AddScreen(Screen screen)
@@ -133,20 +136,17 @@ namespace Astro4x
             Text_Debug_LeftTop.text += "\n" + activeScreen.Name;
             Text_Debug_LeftTop.text += " : " + activeScreen.displayState;
             Text_Debug_LeftTop.text += "\nTILES: " + System_Land.totalTiles;
+            Text_Debug_LeftTop.text += "\nZOOM: " + Camera2D.currentZoom.ToString("0.00");
             //Text_Debug.text += "\nSCROLL WHL: " + Input.scrollWheelValue;
-            
-            
+            Draw(Text_Debug_LeftTop);
+
             //follow mouse around
             //Text_Debug_FollowMouse.position.X = Input.cursorPos_Screen.X + 8;
             //Text_Debug_FollowMouse.position.Y = Input.cursorPos_Screen.Y;
 
             //draw debg info only at 1.0 zoom
-            if (Camera2D.targetZoom == 1.0f)
-            {
-                Draw(Text_Debug_LeftTop);
-                
-            }
-            
+            //if (Camera2D.targetZoom == 1.0f)
+            //{ Draw(Text_Debug_LeftTop); }
 
             SB.End();
             

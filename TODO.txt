@@ -6,11 +6,66 @@ Astro 4x TODO:
 
 
 
+universe view/screen++
 
 
-we need to store planet type with planet data, otherwise we dont
-know what color to draw the background. done.
+create astro sheet, which shows universe tiles.
+get astro screen working in basic way.
 
+figure out the transition between planet and astro views.
+we should be able to zoom out to 0.5f for the universe view too.
+
+we should be able to 'save' the universe, which includes generating
+and binary writing many planets and stars within said universe.
+
+we need to be able to generate stars, which are just white tiles,
+that we can tint as needed (if star is blue, red, yellow, etc).
+
+we need to be able to see and select stars and planets in
+astro view. this should open the planet screen, showing the
+planet zoom view, which we can further zoom into. zooming
+out of the planet screen should just close it. we assume
+the base screen is the universe screen, from now on.
+
+zooming in, should open the planet screen, from astro view.
+
+
+
+
+
+
+
+
+
+we need to add resources to tiles
+
+this is additional columns under each tile type
+so we have land type on X and resource subtype on Y
+but we only have 1 tile to draw. we will need to increase
+the size of tiles to be byte,byte with X,Y draw recs as bytes
+we shouldn't need more than 256x256 land id types
+
+
+
+resources affect food, production, research, or gold
+
+mineral rich soil +2 food
+hydrogen gas +2 food
+oxygen gas +2 food
+
+aluminum +2 production
+uranium +2 production
+titanium +2 production
+
+gold +3 gold
+silver +2 gold
+copper +1 gold, +1 research
+
+silicon +3 research
+palladium +2 research
+boron +1 research, +1 production
+
+use apple, hammer, beaker, and gold bars to represent resources
 
 
 
@@ -22,33 +77,9 @@ add more tile types to help fill out planet landscapes
 rocky planets are pretty boring, for example
 we also need more types of cold terrain for artic planets
 
-create planet view screen, which is central sprite with orbiting moons
-we should be able to 'zoom out' to this planet view from land view
-
-we have 4 different planet types we can display here
-plus different star types
-
-
-
-
-
-
 dev menu screen++
-
-add a button to load world data from file
-
-this should give us a file explorer to choose file from,
-we select it, it populates the land tiles from data. ez.
-
-
 
 we have buttons that represent tiles we can click on,
 and then paint on the world via RMB. these tiles are
 located underneath the save/load buttons. they can have
 a text field to describe them too.
-
-we should have all basic land tiles represented.
-
-
-
-create a universe view, isometric
