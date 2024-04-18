@@ -36,6 +36,9 @@ namespace Astro4x
 
         public static PlanetType planetType = PlanetType.Tropical;
 
+        public static float tileAlpha = 1.0f;
+
+
 
         public static void Constructor()
         {
@@ -56,6 +59,8 @@ namespace Astro4x
             {
                 tiles[i].ID = Tile_LID.Water_Deep;
             }
+
+            tileAlpha = 0.0f;
         }
         
         public static void Update()
@@ -65,17 +70,22 @@ namespace Astro4x
 
         public static void Draw()
         {
+            //fade tiles in from background color
+            tileAlpha += 0.1f;
+            if (tileAlpha > 1.0f) { tileAlpha = 1.0f; }
+
             //draw background color based on planet type to hide map tile edges
             if (planetType == PlanetType.Tropical)
-            { ScreenManager.GDM.GraphicsDevice.Clear(Assets.Color_DeepSea_Blue); }
+            { ScreenManager.GDM.GraphicsDevice.Clear(Assets.Color_DeepSea_Blue * tileAlpha); }
             else if (planetType == PlanetType.Rocky)
-            { ScreenManager.GDM.GraphicsDevice.Clear(Assets.Color_Mars_Orange); }
+            { ScreenManager.GDM.GraphicsDevice.Clear(Assets.Color_Mars_Orange * tileAlpha); }
             else if (planetType == PlanetType.Oasis)
-            { ScreenManager.GDM.GraphicsDevice.Clear(Assets.Color_Desert_Yellow); }
+            { ScreenManager.GDM.GraphicsDevice.Clear(Assets.Color_Desert_Yellow * tileAlpha); }
             else if (planetType == PlanetType.Artic)
-            { ScreenManager.GDM.GraphicsDevice.Clear(Assets.Color_Artic_Blue); }
+            { ScreenManager.GDM.GraphicsDevice.Clear(Assets.Color_Artic_Blue * tileAlpha); }
             else if (planetType == PlanetType.Moon)
-            { ScreenManager.GDM.GraphicsDevice.Clear(Assets.Color_Moon_Gray); }
+            { ScreenManager.GDM.GraphicsDevice.Clear(Assets.Color_Moon_Gray * tileAlpha); }
+
             
 
             int tileCounter = 0;
@@ -98,10 +108,8 @@ namespace Astro4x
                     yCounter++;
                 }
 
-                //calc x pos
+                //calc pos
                 sprite.X = x + tileCounter * 16;
-
-                //calc y pos
                 sprite.Y = y + (yCounter * 16);
                 
                 tileCounter++;
@@ -109,7 +117,8 @@ namespace Astro4x
                 //calc sprite layer
                 sprite.layer = Layers.Land;
                 sprite.layer -= i * 0.000001f; //sort back to front
-                
+                sprite.alpha = tileAlpha;
+
                 //draw sprite at tile location
                 Vector2 origin = new Vector2(8, 8);
 
@@ -698,7 +707,7 @@ namespace Astro4x
             }
             catch (Exception e)
             {
-                //e.ToString()
+                e.ToString();
             }
         }
 

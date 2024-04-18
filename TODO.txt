@@ -3,41 +3,51 @@ Astro 4x TODO:
 
 
 
+add all zoom states back to uni screen from land screen. done.
+basic transition between astro and planet view working.
+
+center camera view on planet when zoomed in, can't move around.
+done, the transition between screens isn't bad, but could be better.
+
+
+
+
+maybe we could fade the universe screen to zero and open the
+planet screen under the universe screen - since we need to 'fade'
+into and out of this transition and the land screen isn't built
+to fade in/out due to the planet mask. so we might be able to 
+get the transition working with the land screen under the universe
+screen...
+
+
 
 
 
 universe view/screen++
 
-
-create astro sheet, which shows universe tiles.
-get astro screen working in basic way.
-
 figure out the transition between planet and astro views.
-we should be able to zoom out to 0.5f for the universe view too.
+
+we will likely need to create 2 cameras to pull this off correctly,
+one cam for uni and one for land.
+
+select a non empty tile
+scroll wheel up to zoom in
+	this opens the land screen over the universe screen
+	but the uni screen is set into closed mode, so no drawing/updating/input
+	we navigate land screen, zooming out eventually
+	this exits the land screen, and sets universe screen into opening state
+
 
 we should be able to 'save' the universe, which includes generating
 and binary writing many planets and stars within said universe.
-
-we need to be able to generate stars, which are just white tiles,
-that we can tint as needed (if star is blue, red, yellow, etc).
-
-we need to be able to see and select stars and planets in
-astro view. this should open the planet screen, showing the
-planet zoom view, which we can further zoom into. zooming
-out of the planet screen should just close it. we assume
-the base screen is the universe screen, from now on.
-
-zooming in, should open the planet screen, from astro view.
+so we will need to create a 'universe file' which saves many 'planet files'
+somehow (is this in one stream or in many files?) do we save planets or
+universes with save games? seems like universe is the way to go.
 
 
 
 
-
-
-
-
-
-we need to add resources to tiles
+we need to add resources to land tiles
 
 this is additional columns under each tile type
 so we have land type on X and resource subtype on Y
@@ -66,10 +76,6 @@ palladium +2 research
 boron +1 research, +1 production
 
 use apple, hammer, beaker, and gold bars to represent resources
-
-
-
-
 
 
 improve world generation routines for all planet types

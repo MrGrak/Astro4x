@@ -27,6 +27,10 @@ namespace Astro4x
         public byte zoomState = 1;
 
 
+
+
+
+
         public Screen_Universe()
         {
             Name = "UNIVERSE";
@@ -92,18 +96,78 @@ namespace Astro4x
                 {
                     if (Input.scrollDirection == 1) //zoom in
                     {
-                        if (zoomState == 2)
+                        if (zoomState == 0)
+                        {
+                            //determine which planet to display based on tile id
+                            if(selectedTileID >= 0)
+                            {
+                                if (System_Universe.tiles[selectedTileID].ID == Tile_UID.Planet_Tropical)
+                                {
+                                    ScreenManager.AddScreen(ScreenManager.Land);
+                                    System_Land.GenMap_Tropical();
+                                }
+                                else if (System_Universe.tiles[selectedTileID].ID == Tile_UID.Planet_Rocky)
+                                {
+                                    ScreenManager.AddScreen(ScreenManager.Land);
+                                    System_Land.GenMap_Mars();
+                                }
+                                else if (System_Universe.tiles[selectedTileID].ID == Tile_UID.Planet_Oasis)
+                                {
+                                    ScreenManager.AddScreen(ScreenManager.Land);
+                                    System_Land.GenMap_Oasis();
+                                }
+                                else if (System_Universe.tiles[selectedTileID].ID == Tile_UID.Planet_Artic)
+                                {
+                                    ScreenManager.AddScreen(ScreenManager.Land);
+                                    System_Land.GenMap_Artic();
+                                }
+                                else if (System_Universe.tiles[selectedTileID].ID == Tile_UID.Planet_Moon)
+                                {
+                                    ScreenManager.AddScreen(ScreenManager.Land);
+                                    System_Land.GenMap_Moon();
+                                }
+                                else
+                                {
+                                    //can't zoom into empty space
+                                }
+                            }
+                        }
+                        else if (zoomState == 1)
+                        {
+                            zoomState = 0; //zoom in
+                            Camera2D.targetZoom = 2.0f;
+                        }
+                        else if (zoomState == 2)
                         {
                             zoomState = 1; //zoom in
                             Camera2D.targetZoom = 1.0f;
                         }
+                        else if (zoomState == 3)
+                        {
+                            zoomState = 2; //zoom in
+                            Camera2D.targetZoom = 0.5f;
+                        }
                     }
                     else if (Input.scrollDirection == 2) //zoom out
                     {
-                        if (zoomState <= 1)
+                        if (zoomState == 0)
+                        {
+                            zoomState = 1; //zoom out
+                            Camera2D.targetZoom = 1.0f;
+                        }
+                        else if (zoomState == 1)
                         {
                             zoomState = 2; //zoom out
                             Camera2D.targetZoom = 0.5f;
+                        }
+                        else if (zoomState == 2)
+                        {
+                            zoomState = 3; //zoom out
+                            Camera2D.targetZoom = 0.25f;
+                        }
+                        else if (zoomState == 3)
+                        {
+                            //nothing, can't zoom out more
                         }
                     }
                 }
@@ -234,6 +298,10 @@ namespace Astro4x
                     #endregion
 
                 }
+                else if (Camera2D.targetZoom > 1.0f)
+                {
+                    ZoomToSelected();
+                }
                 else
                 {
                     //zoomed out, lock camera to one position
@@ -290,6 +358,10 @@ namespace Astro4x
 
         public override void Draw()
         {
+            //dont draw universe screen if active screen is land
+            //if(ScreenManager.activeScreen == ScreenManager.Land) { return; }
+
+
             ScreenManager.SB.Begin(SpriteSortMode.BackToFront,
                 BlendState.AlphaBlend,
                 SamplerState.PointClamp,
@@ -335,6 +407,29 @@ namespace Astro4x
         }
 
         //
+
+        public void ZoomToSelected()
+        {
+            if (selectedTileID >= 0)
+            {
+                Point tilePos = new Point(0, 0);
+
+                int row = selectedTileID / System_Universe.tilesPerRow;
+                int col = selectedTileID % System_Universe.tilesPerRow;
+
+                //calc pos
+                tilePos.X = System_Universe.x + (col * 16);
+                tilePos.Y = System_Universe.y + (row * 16);
+
+                Camera2D.targetPosition.X = tilePos.X + 0;
+                Camera2D.targetPosition.Y = tilePos.Y + 16;
+            }
+        }
+
+
+
+
+
 
     }
 }

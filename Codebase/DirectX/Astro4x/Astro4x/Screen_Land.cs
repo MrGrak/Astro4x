@@ -63,6 +63,8 @@ namespace Astro4x
             planetCutout.alpha = 0.0f;
             planetCutout.layer = Layers.Planet_Cutout;
             planetCutout.X = 0; planetCutout.Y = 0;
+
+            System_Land.Reset();
         }
 
         public override void Open()
@@ -74,7 +76,7 @@ namespace Astro4x
             
             //load map into land system
             //System_Land.GenMap_Tropical();
-            System_Land.GenMap_Mars();
+            //System_Land.GenMap_Mars();
 
             //place camera center
             Camera2D.targetPosition = new Vector2(632, 368);
@@ -85,6 +87,12 @@ namespace Astro4x
 
             //reset any mutated state
             selectedTileID = -1;
+
+            //set state to planet view
+            zoomState = 3;
+            Camera2D.targetZoom = 0.25f;
+            Camera2D.currentZoom = 0.25f;
+            planetCutout.alpha = 1.0f;
         }
 
         public override void Close()
@@ -150,7 +158,17 @@ namespace Astro4x
                         }
                         else if (zoomState == 3)
                         {
-                            //nothing, can't zoom out more
+                            //nothing, can't zoom out more, remove land screen
+                            ScreenManager.RemoveScreen(this);
+
+                            //reset universe to zoomed in state
+                            ScreenManager.Universe.zoomState = 0;
+                            Camera2D.targetZoom = 2.0f;
+                            Camera2D.currentZoom = 2.0f;
+                            //zoom to last selected
+                            ScreenManager.Universe.ZoomToSelected();
+                            //teleport camera
+                            Camera2D.currentPosition = Camera2D.targetPosition;
                         }
                     }
                 }
@@ -256,9 +274,7 @@ namespace Astro4x
                                 //place highlight tile over tile
                                 highliteTile.X = tilePos.X - 8;
                                 highliteTile.Y = tilePos.Y - 8;
-
                                 
-
                                 //check for LMB
                                 if (Input.IsNewLeftClick())
                                 {
@@ -350,6 +366,7 @@ namespace Astro4x
                     }
 
                     #endregion
+
                 }
                 else
                 {
@@ -358,6 +375,14 @@ namespace Astro4x
                     Camera2D.targetPosition.Y = 368;
                     //this is for 0.5 and 0.25 zooms
                 }
+
+
+
+                
+
+
+
+
             }
         }
 
